@@ -1,0 +1,249 @@
+@import tools.Const
+@import models.UserSession
+@import play.i18n.Messages
+@(userSession: models.UserSession)
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <meta name="author" content="Hau Nguyen">
+    <meta name="keywords" content="au theme template">
+
+    <!-- Title Page-->
+    <title>SunRize Express</title>
+
+    <script type="text/javascript">
+       var profil_admin = '@Const.PROFIL_ADMIN';
+       var profil_sender = '@Const.PROFIL_SENDER';
+       var profil_payer = '@Const.PROFIL_PAYER';
+       var profilUser = '@userSession.getProfil()';
+
+       var btnDetail = '@Messages.get("btn.detail")';
+</script>
+
+    <!-- Fontfaces CSS-->
+    <link href="../assets/css/font-face.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link href="../assets/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link href="../assets/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="../assets/css/theme.css" rel="stylesheet" media="all">
+    <link href="../assets/css/datepicker3.css" rel="stylesheet" media="all">
+    <link href="../assets/stylesheets/main.css" rel="stylesheet" media="all">
+
+    <script type="text/javascript">
+
+        var labelPagingFirst = '@Messages.get("paging.first")';
+        var labelPagingPrev = '@Messages.get("paging.prev")';
+        var labelPagingNext = '@Messages.get("paging.next")';
+        var labelPagingLast = '@Messages.get("paging.last")';
+        var labelPaging = '@Messages.get("paging.label")';
+
+        var labelVerifySearch = '@Messages.get("label.verify.search")';
+
+    </script>
+
+</head>
+
+<body class="animsition">
+<div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    @menu(userSession)
+    <!-- END MENU SIDEBAR-->
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+
+        <!-- HEADER DESKTOP-->
+        @header(userSession)
+        <!-- END HEADER DESKTOP-->
+
+        <!-- MAIN CONTENT-->
+        <div class="main-content">
+
+
+
+            <ol id="olShowError"></ol>
+            <ol id="olShowErrorWarning"></ol>
+            <ol id="olShowSuccess"></ol>
+
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- DATA TABLE -->
+                            <h3 class="title-5 m-b-35">@Messages.get("label.transactions")</h3>
+                            <div class="table-data__tool">
+                                <div class="table-data__tool-left">
+                                    <div class="rs-select2--light rs-select2--md">
+                                        <input type="text" id="begin" name="text-input" placeholder="@Messages.get("label.begin")" class="datepicker form-control">
+                                    </div>
+                                    <div class="rs-select2--light rs-select2--sm">
+                                        <input type="text" id="end" name="text-input" placeholder="@Messages.get("label.end")" class="datepicker form-control">
+                                    </div>
+                                    <button id="btnSearch" class="au-btn au-btn-icon btn-primary au-btn--small">
+                                        <i class="zmdi zmdi-search"></i>@Messages.get("btn.search")</button>
+                                </div>
+                                <div class="table-data__tool-right">
+                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                        <i class="zmdi zmdi-collection-pdf"></i>@Messages.get("btn.pdf")</button>
+                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                        <i class="zmdi zmdi-collection-text"></i></i>@Messages.get("btn.xls")</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive table--no-card m-b-30">
+                                <table class="table table-borderless table-striped table-earning">
+                                    <thead>
+                                    <tr>
+                                        <th>@Messages.get("label.num")</th>
+                                        <th>@Messages.get("label.reference")</th>
+                                        <th>@Messages.get("label.sender")</th>
+                                        <th class="text-right">@Messages.get("label.amount")</th>
+                                        <th>@Messages.get("label.date")</th>
+                                        <th>@Messages.get("label.status")</th>
+                                        <th>@Messages.get("label.payer")</th>
+                                        <th>@Messages.get("label.reference.pay")</th>
+                                        <th>@Messages.get("label.date.pay")</th>
+                                        <th>@Messages.get("label.action")</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div id="divPagination" class="col-md-4"></div>
+                                <div class="col-md-2 pagingLabel" style="margin-top: 20px;"><h5 class="text-primary" id="pagingBottom"></h5></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="copyright">
+                                <p>Copyright © 2021 SunRize Express by memaone</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<div class="modal fade show" id="modalTransaction" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="scrollmodalLabel">@Messages.get("Transaction.data")</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ol id="olShowErrorPay"></ol>
+                <ol id="olShowSuccessPay"></ol>
+
+                <table class="table table-top-campaign">
+                    <tbody id="tbodyTransaction">
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button id="btnCancelPay" type="button" class="btn btn-secondary" data-dismiss="modal">@Messages.get("btn.close")</button>
+                <button id="btnPrint" type="button" class="btn btn-primary"><i class="fa fa-spinner fa-spin loader"></i> @Messages.get("btn.print")</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Jquery JS-->
+<script src="../assets/vendor/jquery-3.2.1.min.js"></script>
+<!-- Bootstrap JS-->
+<script src="../assets/vendor/bootstrap-4.1/popper.min.js"></script>
+<script src="../assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+<!-- Vendor JS       -->
+<script src="../assets/vendor/slick/slick.min.js">
+</script>
+<script src="../assets/vendor/wow/wow.min.js"></script>
+<script src="../assets/vendor/animsition/animsition.min.js"></script>
+<script src="../assets/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+</script>
+<script src="../assets/vendor/counter-up/jquery.waypoints.min.js"></script>
+<script src="../assets/vendor/counter-up/jquery.counterup.min.js">
+</script>
+<script src="../assets/vendor/circle-progress/circle-progress.min.js"></script>
+<script src="../assets/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="../assets/vendor/chartjs/Chart.bundle.min.js"></script>
+<script src="../assets/vendor/select2/select2.min.js">
+</script>
+
+<!-- Main JS-->
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/moment.js"></script>
+<script src="../assets/js/jquery-ui.min.js"></script>
+<script src="../assets/js/bootstrap-datepicker.js"></script>
+
+<script src="@controllers.routes.HomeController.jsRoutes()" type="text/javascript"></script>
+<script src="../assets/javascripts/jquery.twbsPagination.js"></script>
+<script src="../assets/javascripts/api.js"></script>
+<script src="../assets/javascripts/transactions.js"></script>
+
+<script>
+    (function($){
+    $.fn.datepicker.dates['fr'] = {
+    days: ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"],
+    daysShort: ["dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam."],
+    daysMin: ["d", "l", "ma", "me", "j", "v", "s"],
+    months: ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"],
+    monthsShort: ["janv.", "févr.", "mars", "avril", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."],
+    today: "Aujourd'hui",
+    monthsTitle: "Mois",
+    clear: "Effacer",
+    weekStart: 1,
+    format: "yyyy-mm-dd"
+    };
+    }(jQuery));
+
+
+    $('.datepicker').datepicker({
+    language: 'fr',
+    autoclose: true,
+    todayHighlight: true
+    })
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

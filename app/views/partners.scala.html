@@ -1,0 +1,480 @@
+@import tools.Const
+@import models.UserSession
+@import play.i18n.Messages
+@(userSession: models.UserSession)
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <meta name="author" content="Hau Nguyen">
+    <meta name="keywords" content="au theme template">
+
+    <!-- Title Page-->
+    <title>SunRize Express</title>
+
+    <script type="text/javascript">
+       var profil_admin = '@Const.PROFIL_ADMIN';
+       var profil_sender = '@Const.PROFIL_SENDER';
+       var profil_payer = '@Const.PROFIL_PAYER';
+       var profilUser = '@userSession.getProfil()';
+
+       var labelVerifyAmount = '@Messages.get("label.verify.amount")';
+       var labelDetail = '@Messages.get("label.detail.partner")';
+       var labelUpdate = '@Messages.get("label.update.partner")';
+       var labelDepot = '@Messages.get("label.depot.partner")';
+       var labelTransactions = '@Messages.get("label.transactions.partner")';
+       var labelUsers = '@Messages.get("label.users.partner")';
+
+       var labelVerifyPartner = '@Messages.get("label.verify.partner")';
+       var labelVerifyName = '@Messages.get("label.verify.partner.name")';
+       var labelVerifyType = '@Messages.get("label.verify.partner.type")';
+       var labelVerifyAdress = '@Messages.get("label.verify.partner.adress")';
+       var labelVerifyTel = '@Messages.get("label.verify.partner.tel")';
+       var labelVerifyEmail = '@Messages.get("label.verify.partner.email")';
+       var labelVerifyCountry = '@Messages.get("label.verify.partner.country")';
+      var labelVerifyAmount = '@Messages.get("label.verify.amount")';
+
+       var labelCountry = '@Messages.get("label.country")';
+       var labelBank = '@Messages.get("label.bank")';
+
+</script>
+
+    <!-- Fontfaces CSS-->
+    <link href="../assets/css/font-face.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link href="../assets/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link href="../assets/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="../assets/css/theme.css" rel="stylesheet" media="all">
+    <link href="../assets/css/datepicker3.css" rel="stylesheet" media="all">
+    <link href="../assets/stylesheets/main.css" rel="stylesheet" media="all">
+
+    <script type="text/javascript">
+
+        var labelPagingFirst = '@Messages.get("paging.first")';
+        var labelPagingPrev = '@Messages.get("paging.prev")';
+        var labelPagingNext = '@Messages.get("paging.next")';
+        var labelPagingLast = '@Messages.get("paging.last")';
+        var labelPaging = '@Messages.get("paging.label")';
+
+        var labelVerifySearch = '@Messages.get("label.verify.search")';
+
+    </script>
+
+</head>
+
+<body class="animsition">
+<div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    @menu(userSession)
+    <!-- END MENU SIDEBAR-->
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+
+        <!-- HEADER DESKTOP-->
+        @header(userSession)
+        <!-- END HEADER DESKTOP-->
+
+        <!-- MAIN CONTENT-->
+        <div class="main-content">
+
+
+
+            <ol id="olShowError"></ol>
+            <ol id="olShowErrorWarning"></ol>
+            <ol id="olShowSuccess"></ol>
+
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- DATA TABLE -->
+                            <h3 class="title-5 m-b-35">@Messages.get("menu.partner")</h3>
+                            <div class="table-data__tool">
+                                <div class="table-data__tool-left">
+                                    <div class="rs-select2--light rs-select2--md">
+                                        <input type="text" id="begin" name="text-input" placeholder="@Messages.get("label.name")" class="form-control">
+                                    </div>
+                                    <button id="btnSearch" class="au-btn au-btn-icon btn-primary au-btn--small">
+                                        <i class="zmdi zmdi-search"></i>@Messages.get("btn.search")</button>
+                                </div>
+                                <div class="table-data__tool-right">
+                                    <button class="au-btn au-btn-icon btn btn-info au-btn--small" data-toggle="modal" data-target="#modalNewPartner">
+                                        <i class="zmdi zmdi-plus"></i>@Messages.get("btn.new.partner")</button>
+                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                        <i class="zmdi zmdi-collection-pdf"></i>@Messages.get("btn.pdf")</button>
+                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                        <i class="zmdi zmdi-collection-text"></i></i>@Messages.get("btn.xls")</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive table--no-card m-b-30">
+                                <table class="table table-data2">
+                                    <thead>
+                                    <tr>
+                                        <th>@Messages.get("label.num")</th>
+                                        <th>@Messages.get("label.partner.name")</th>
+                                        <th>@Messages.get("label.partner.type")</th>
+                                        <th>@Messages.get("label.partner.adress")</th>
+                                        <th>@Messages.get("label.partner.tel")</th>
+                                        <th>@Messages.get("label.partner.email")</th>
+                                        <th>@Messages.get("label.action")</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div id="divPagination" class="col-md-4"></div>
+                                <div class="col-md-2 pagingLabel" style="margin-top: 20px;"><h5 class="text-primary" id="pagingBottom"></h5></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="copyright">
+                                <p>Copyright © 2021 SunRize Express by memaone</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade show" id="modalNewPartner" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediumModalLabel">@Messages.get("add.new.partner")</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul id="myTabs" class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active tabPartner"><a id="aAddDataPartner" href="#addDataPartner" aria-controls="addDataPartner" role="tab" data-toggle="tab"><span class="badge">1</span>@Messages.get("new.partner.data")</a></li>
+                    <li role="presentation" class="tabPartner"><a id="aAddDataBankPartner" href="#addDataBankPartner" aria-controls="addDataBankPartner" role="tab"><span class="badge">2</span>@Messages.get("new.partner.data.bank")</a></li>
+                </ul>
+                <div class="tab-content">
+                    <ol id="olShowErrorAdd"></ol>
+                    <ol id="olShowSuccessAdd"></ol>
+                    <div role="tabpanel" class="tab-pane active" id="addDataPartner">
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Messages.get("partner.name") <span class="requiered">*</span></label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <input type="text" id="partnertName" name="text-input" placeholder="@Messages.get("partner.name")" class="partnerAdd form-control form-part">
+                                <small class="form-text text-muted">@Messages.get("partner.name.label")</small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Messages.get("partner.type") <span class="requiered">*</span></label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <select name="select" id="partnerType" class="form-control form-part">
+                                    <option value="">@Messages.get("partner.type")</option>
+                                    <option value="SENDER">@Messages.get("partner.type.sender")</option>
+                                    <option value="PAYER">@Messages.get("partner.type.payer")</option>
+                                </select>
+                                <small class="form-text text-muted">@Messages.get("partner.type.choice")</small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Messages.get("partner.adress") <span class="requiered">*</span></label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <input type="text" id="partnerAdress" name="text-input" placeholder="@Messages.get("partner.adress")" class="partnerAdd form-control form-part">
+                                <small class="form-text text-muted">@Messages.get("partner.adress.label")</small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Messages.get("partner.tel") <span class="requiered">*</span></label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <input type="text" id="partnerTel" name="text-input" placeholder="@Messages.get("partner.tel")" class="partnerAdd form-control form-part">
+                                <small class="form-text text-muted">@Messages.get("partner.tel.label")</small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Messages.get("partner.email") <span class="requiered">*</span></label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <input type="text" id="partnerEmail" name="text-input" placeholder="@Messages.get("partner.email")" class="partnerAdd form-control form-part">
+                                <small class="form-text text-muted">@Messages.get("partner.email.label")</small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Messages.get("partner.country") <span class="requiered">*</span></label>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <select name="select" id="partnerCountry" class="form-control form-part">
+                                </select>
+                                <small class="form-text text-muted">@Messages.get("partner.country.choice")</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="addDataBankPartner">
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Messages.get("partner.bank")</label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <select name="select" id="partnerBank" class="form-control">
+                                </select>
+                                <small class="form-text text-muted">@Messages.get("partner.bank.choice")</small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Messages.get("partner.code.guichet")</label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <input type="text" id="partnerGuichet" name="text-input" placeholder="@Messages.get("partner.code.guichet")" class="userAdd form-control">
+                                <small class="form-text text-muted">@Messages.get("partner.code.guichet.label")</small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Messages.get("partner.bank.account")</label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <input type="text" id="partnerBankAccount" name="text-input" placeholder="@Messages.get("partner.bank.account")" class="userAdd form-control">
+                                <small class="form-text text-muted">@Messages.get("partner.bank.account.label")</small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Messages.get("partner.rib")</label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <input type="text" id="partnerRIB" name="text-input" placeholder="@Messages.get("partner.rib")" class="userAdd form-control">
+                                <small class="form-text text-muted">@Messages.get("partner.rib.label")</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="btnCancelAdd" type="button" class="btn btn-secondary" data-dismiss="modal">@Messages.get("btn.cancel")</button>
+                <button id="btnAdd" type="button" class="btn btn-primary"> <i class="fa fa-spinner fa-spin loader"></i> @Messages.get("btn.add")</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Messages.get("title.modal.detail.partner")</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body stylePrinterBody">
+
+                <table class="table table-top-campaign">
+                    <tbody id="tbodyPrinter">
+                    <tr>
+                        <td>@Messages.get("label.partner.name")</td>
+                        <td id="partnerNameDetail"></td>
+                    </tr>
+                    <tr>
+                        <td>@Messages.get("label.partner.type")</td>
+                        <td id="partnerTypeDetail"></td>
+                    </tr>
+                    <tr>
+                        <td>@Messages.get("label.partner.adress")</td>
+                        <td id="partnerAdressDetail"></td>
+                    </tr>
+                    <tr>
+                        <td>@Messages.get("label.partner.tel")</td>
+                        <td id="partnerTelDetail"></td>
+                    </tr>
+                    <tr>
+                        <td>@Messages.get("label.partner.email")</td>
+                        <td id="partnerEmailDetail"></td>
+                    </tr>
+                    <tr>
+                        <td>@Messages.get("label.partner.country")</td>
+                        <td id="partnerCountryDetail"></td>
+                    </tr>
+                    <tr>
+                        <td>@Messages.get("label.partner.account.princ")</td>
+                        <td id="partnerAccountPrincDetail"></td>
+                    </tr>
+                    <tr>
+                        <td>@Messages.get("label.partner.account.comm")</td>
+                        <td id="partnerAccountCommDetail"></td>
+                    </tr>
+                    <tr>
+                        <td>@Messages.get("label.partner.account.charge")</td>
+                        <td id="partnerAccountChargeDetail"></td>
+                    </tr>
+                    <tr>
+                        <td>@Messages.get("label.partner.balance.princ")</td>
+                        <td id="partnerBalancePrincDetail"></td>
+                    </tr>
+                    <tr>
+                        <td>@Messages.get("label.partner.balance.comm")</td>
+                        <td id="partnerBalanceCommDetail"></td>
+                    </tr>
+                    <tr>
+                        <td>@Messages.get("label.partner.balance.charge")</td>
+                        <td id="partnerBalanceChargeDetail"></td>
+                    </tr>
+                    <tr>
+                        <td>@Messages.get("label.partner.bank.data")</td>
+                        <td id="partnerBankDataDetail"></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@Messages.get("btn.close")</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" id="modalDepot" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">@Messages.get("do.depot")</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ol id="olShowErrorDepot"></ol>
+                <ol id="olShowSuccessDepot"></ol>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("partner.name") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="text" id="partnertNameDepot" name="text-input" disabled placeholder="@Messages.get("partner.name")" class="partnerAdd form-control">
+                        <small class="form-text text-muted">@Messages.get("partner.name.label")</small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("partner.depot.amount") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="text" id="montantDepot" name="text-input" placeholder="@Messages.get("partner.depot.amount")" class="form-control">
+                        <small class="form-text text-muted">@Messages.get("partner.depot.amount.label")</small>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnCancelDepot" type="button" class="btn btn-secondary" data-dismiss="modal">@Messages.get("btn.cancel")</button>
+                <button id="btnSaveDepot" type="button" class="btn btn-primary"> <i class="fa fa-spinner fa-spin loader"></i> @Messages.get("btn.save")</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Jquery JS-->
+<script src="../assets/vendor/jquery-3.2.1.min.js"></script>
+<!-- Bootstrap JS-->
+<script src="../assets/vendor/bootstrap-4.1/popper.min.js"></script>
+<script src="../assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+<!-- Vendor JS       -->
+<script src="../assets/vendor/slick/slick.min.js">
+</script>
+<script src="../assets/vendor/wow/wow.min.js"></script>
+<script src="../assets/vendor/animsition/animsition.min.js"></script>
+<script src="../assets/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+</script>
+<script src="../assets/vendor/counter-up/jquery.waypoints.min.js"></script>
+<script src="../assets/vendor/counter-up/jquery.counterup.min.js">
+</script>
+<script src="../assets/vendor/circle-progress/circle-progress.min.js"></script>
+<script src="../assets/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="../assets/vendor/chartjs/Chart.bundle.min.js"></script>
+<script src="../assets/vendor/select2/select2.min.js">
+</script>
+
+<!-- Main JS-->
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/moment.js"></script>
+<script src="../assets/js/jquery-ui.min.js"></script>
+<script src="../assets/js/bootstrap-datepicker.js"></script>
+
+<script src="@controllers.routes.HomeController.jsRoutes()" type="text/javascript"></script>
+<script src="../assets/javascripts/jquery.twbsPagination.js"></script>
+<script src="../assets/javascripts/api.js"></script>
+<script src="../assets/javascripts/partners.js"></script>
+
+<script>
+    (function($){
+    $.fn.datepicker.dates['fr'] = {
+    days: ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"],
+    daysShort: ["dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam."],
+    daysMin: ["d", "l", "ma", "me", "j", "v", "s"],
+    months: ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"],
+    monthsShort: ["janv.", "févr.", "mars", "avril", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."],
+    today: "Aujourd'hui",
+    monthsTitle: "Mois",
+    clear: "Effacer",
+    weekStart: 1,
+    format: "yyyy-mm-dd"
+    };
+    }(jQuery));
+
+
+    $('.datepicker').datepicker({
+    language: 'fr',
+    autoclose: true,
+    todayHighlight: true
+    })
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

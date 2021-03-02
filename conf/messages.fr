@@ -1,0 +1,260 @@
+label.langue = Langue
+label.langue.fr = FRANCAIS
+label.langue.en = ENGLISH
+label.operations = Opérations
+label.transactions = Transactions
+label.compenses = Compenses
+label.principal.balance = Balance principal
+label.fees.balance = Balance commissions
+label.charge.balance = Balance charge
+label.num = N°
+label.operation = Opération
+label.reference = Référence
+label.reference.pay = Référence Paiement
+label.account = Compte
+label.amount = Montant
+label.sens = Sens
+label.date = Date
+label.date.pay = Date paiement
+label.sender = ENVOYEUR
+label.status = Status
+label.payer = PAYEUR
+label.partner = Partenaire
+label.amount = Montant
+label.beneficiairy = Bénéficiaire
+label.transmetter = Tranmetteur
+label.beneficiairy.phone = Téléphone bénéficiaire
+label.country = Pays
+label.action = Actions
+label.name = Nom
+label.begin = Date début
+label.end = Date fin
+
+label.customer = client
+label.parter = Partenaire
+
+label.bank = Banque
+
+label.username = login
+label.password = Mot de passe
+label.password.old = Ancien mot de passe
+label.password.new = Nouveau mot de  passe
+label.password.renew = Confirmer nouveau mot de passe
+label.activation.code = Code activation
+label.change.pass = Changer mot de passe
+label.logout = Déconnexion
+
+menu.dashboard = Tableau de bord
+menu.transaction = Transactions
+menu.compense = Compenses
+menu.depot = Dépôts
+menu.partner = Partenaires
+
+add.new.transfer = Saisie nouveau transfert
+add.new.transfer.amount = Montant
+add.new.transfer.amount.label = Le montant à envoyer
+add.new.transfer.transmetter = Transmetteur
+add.new.transfer.transmetter.label = Le nom du transmetteur
+add.new.transfer.transmetter.id = Id tranmetteur
+add.new.transfer.transmetter.id.label = Identification du transmetteur
+add.new.transfer.beneficiairy = Bénéficiaire
+add.new.transfer.beneficiairy.label = Le nom du bénéficiaire
+add.new.transfer.beneficiairy.phone = Téléphone bénéficiaire
+add.new.transfer.beneficiairy.phone.label = Le numéro de téléphone du bénéficiaire
+add.new.transfer.country = Pays
+add.new.transfer.country.choice = Choisir le pays de destination
+
+
+add.new.compense = Initier une compense
+add.new.compense.amount = Montant
+add.new.compense.amount.label = Le montant de la compense
+
+recap.transac = Transaction
+recap.message = Message
+recap.code.payment = Code paiement
+recap.service = Service
+recap.amount = Montant
+recap.fees = Commissions
+recap.total = Total
+recap.balance = Balance
+recap.balance.princ = Balance principal
+recap.balance.comm = Balance commissions
+recap.balance.charge = Balance charge
+
+btn.signin = CONNEXION
+btn.activation = ACTIVATION
+btn.search = CHERCHER
+btn.new.transfer = NOUVEAU TRANSFERT
+btn.new.compense = NOUVELLE COMPENSE
+btn.new.depot = NOUVEAU DEPOT
+btn.do.payment = FAIRE UN PAIEMENT
+btn.xls = XLS
+btn.pdf = PDF
+btn.send = ENVOYER
+btn.pay = PAYER TRANSACTION
+btn.cancel = ANNULER
+btn.print = IMPRIMER
+btn.detail = DETAIL
+btn.init = INITIER
+btn.close = FERMER
+btn.fees = CALCUL COMMISSIONS
+btn.check = CALCULER
+btn.close = FERMER
+btn.add = AJOUTER
+btn.update = MODIFER
+btn.save = ENREGISTRER
+btn.new.partner = AJOUT PARTENAIRE
+btn.new.user = AJOUT UTILISATEUR
+
+paging.first = Première
+paging.prev = Précédente
+paging.next = Suivante
+paging.last = Dernière
+paging.label = pages
+
+label.verify.search = Donner un paramètre de recherche !!!
+label.verify.amount = Le montant est requis !!!
+label.verify.benef = Donner le nom du bénéficiaire !!!
+label.verify.transmetter = Donner le nom du transmetteur !!!
+label.verify.transmetter.id = l'identification du transmetteur est requise !!!
+label.verify.benef.tel = Donner le numéro de téléphone du bénéficiaire !!!
+label.verify.code.payment = Le code de paiement est requis !!!
+label.verify.benef.id = L'identification du bénéficiaire est requise !!!
+label.verify.first.name = Donner le prénom de l'utilisateur !!!
+label.verify.last.name = Donner le nom de l'utilisateur !!!
+label.verify.tel = Donner le numéro de téléphone de l'utilisateur !!!
+label.verify.email = Donner l'email de l'utilisateur !!!
+label.verify.login = Le login est requis !!!
+label.verify.profil = Choisir un profil !!!
+label.verify.partner = Saisir d'abord les données du partenaire !!!
+label.verify.partner.name = Donner le nom du partenaire !!!
+label.verify.partner.type = Choisir le type du partenaire !!!
+label.verify.partner.adress = Donner l'adresse du partenaire !!!
+label.verify.partner.tel = Donner le numéro de téléphone du partenaire !!!
+label.verify.partner.email = Donner l'email du partenaire !!!
+label.verify.partner.country = Choisir le pays !!!
+
+label.verify.pass.old = L'ancien mot de passe est requis !!!
+label.verify.pass.new = Donner le nouveau mot de passe !!!
+label.verify.pass.renew = Confirmer le nouveau mot de passe !!!
+label.verify.pass.new.same = Confirmer le même nouveau mot de passe !!!
+
+label.empty.list = Liste vide !!!
+
+title.modal.print.transfer = Imprimer Paiement
+pay.transfer = Faire un paiement
+pay.transfer.code.payment = Code paiement
+pay.transfer.code.payment.label = Le code de paiement
+pay.transfer.beneficiairy.id = Id bénéficiaire
+pay.transfer.beneficiairy.id.label = L'identification du bénéficiaire
+
+check.fees = Vérifier commssions
+fees.amount = Montant
+fees.amount.label = Le montant à vérifier
+fees.country = Pays
+fees.country.choice = Choisir le paus
+
+Transaction.data = Données de la transaction
+
+label.partner.name = Nom
+label.partner.type = Type
+label.partner.adress = Adresse
+label.partner.tel = Téléphone
+label.partner.email = Email
+
+error.bad.profil = Profil inconnu
+label.message.empty.user = Liste utilisateurs vide
+error.parameter = Paramètres incorrects
+success.show = Opération faite avec succès
+
+message.hi = Bonjour
+message.create.user = vos paramètres utilisateurs de connexion au plateforme SUNRISE TRANSFER
+message.create.user.login = login
+message.create.user.pass = mot de passe
+message.update.user.pass = votre nouveau mot de passe est
+message.header = SUNRISE EXPRESS
+message.create.partner = vos comptes partenaire SUNRISE EXPRESS ont été crés avec succès. Vos paramètres de connexion seront communiqués ultérieurement
+message.depot.partner = vous venez de recevoir un dépôt SUNRISE TRANSFER
+message.depot.transaction = Numéro de transaction
+message.depot.balance = Nouvelle balance de votre compte charge
+
+title.modal.detail.partner = Deétail partenaire
+label.partner.name = Nom
+label.partner.name = Nom
+label.partner.type = Type
+label.partner.adresse = Adresse
+label.partner.tel = Téléphone
+label.partner.email = Email
+label.partner.country = Pays
+label.partner.account.princ = Compte principal
+label.partner.account.comm = Compte commissions
+label.partner.account.charge = Compte charge
+label.partner.balance.princ = Balance principal
+label.partner.balance.comm = Balance commissions
+label.partner.balance.charge = Balance charge
+label.partner.bank.data = Infos bancaires
+label.detail.partner = Détail du partenaire
+label.update.partner =  Modifier quelques informations
+label.depot.partner =  Faire un dépôt
+label.users.partner = Utilisateurs du partenaire
+label.transactions.partner =  Transactions du partenaire
+
+add.new.partner = Ajout d'un nouveau partenaire
+partner.name = Nom
+partner.name.label = Le nom du partenaire
+partner.type = Type
+partner.type.sender = ENVOYEUR
+partner.type.payer = PAYEUR
+partner.type.choice = Choisir le type du partenaire
+partner.adress = Adresse
+partner.adress.label = L'adresse du partenaire
+partner.tel = Téléphone
+partner.tel.label = Le numéro de téléphone du partenaire
+partner.email = Email
+partner.email.label = L'email du partenaire
+partner.country = Pays
+partner.country.choice = Choisir le pays du partenaire
+new.partner.data = Données du partenaire
+new.partner.data.bank = Données bancaires du partenaire
+partner.bank = Banque
+partner.bank.choice = Choice la banque du partenaire
+partner.code.guichet = Code guichet
+partner.code.guichet.label = Le code guichet bancaire du partenaire
+partner.bank.account = Compte bancaire
+partner.bank.account.label = Le numéro de compte bancaire du partenaire
+partner.rib = RIB
+partner.rib.label = Le RIB du partenaire
+
+do.depot = Faire un dépôt SENDER
+partner.depot.amount = Montant
+partner.depot.amount.label = Le montant du dépôt
+
+menu.partner.user.list = Liste utilisateurs
+add.new.user = Ajout nouvel utilisateur
+update.user = Modifier utilisateur
+user.first.name = Prenom
+user.first.name.label = Le prénom de l'utilisateur
+user.last.name = Nom
+user.last.name.label = Le nom de l'utilisateur
+user.tel = Téléphone
+user.tel.label = Le numéro de téléphone de l'utilisateur
+user.email = Email
+user.email.label = L'email de l'utilisateur
+user.login = Login
+user.login.choice = Le login de l'utilisateur
+user.profil = Profil
+user.profil.choice = Choisir un profil
+user.profil.choice.label = Profil utilisateur
+user.date.creation = Date création
+user.verrou = Verrou
+
+label.btn.update.user = Mofifier l'utilisateur
+label.btn.block.user = Bloquer l'utilisateur
+label.btn.unblock.user = Débloquer l'utilisateur
+label.btn.reinit.user = Réinitialiser le mot de passe de l'utilisateur
+
+dialog.confirm = Confirmation
+
+label.message.block = Voulez vous bloquer
+label.message.deblock = Voulez vous débloquer
+label.message.reinit = Voulez vous réinitialiser le mot de passe

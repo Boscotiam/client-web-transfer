@@ -1,0 +1,78 @@
+@import tools.Const
+@import models.UserSession
+@import play.i18n.Messages
+@(userSession: UserSession)
+<header class="header-desktop">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="header-wrap">
+                <form class="form-header" action="" method="POST">
+                    <!--<input class="au-input au-input&#45;&#45;xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
+                    <button class="au-btn&#45;&#45;submit" type="submit">
+                        <i class="zmdi zmdi-search"></i>
+                    </button>-->
+                </form>
+                <div class="header-button">
+
+                    <div class="account-wrap">
+                        <div class="account-item clearfix js-item-menu">
+                            <div class="content">
+                                <a class="js-acc-btn" href="#">@Messages.get("label.langue")</a>
+                            </div>
+                            <div class="account-dropdown minWith js-dropdown">
+                                <div class="account-dropdown__body">
+                                    <div class="account-dropdown__item">
+                                        <a href="/changeLang?lang=fr">@Messages.get("label.langue.fr")</a>
+                                    </div>
+                                    <div class="account-dropdown__item">
+                                        <a href="/changeLang?lang=en">@Messages.get("label.langue.en")</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="account-wrap">
+                        <div class="account-item clearfix js-item-menu">
+                            <!--<div class="image">
+                                <img src="../assets/images/icon/avatar-01.jpg" alt="John Doe" />
+                            </div>-->
+                            <div class="content">
+                                <a class="js-acc-btn" href="#">@userSession.getName()</a>
+                            </div>
+                            <div class="account-dropdown js-dropdown">
+                                <div class="info clearfix">
+                                    <!--<div class="image">
+                                        <a href="#">
+                                            <img src="../assets/images/icon/avatar-01.jpg" alt="John Doe" />
+                                        </a>
+                                    </div>-->
+                                    <div class="content">
+                                        <h5 class="name">
+                                            <a href="#">@userSession.getName()</a>
+                                        </h5>
+                                        <span class="email">@userSession.getPartner()</span>
+                                    </div>
+                                </div>
+                                <div class="account-dropdown__body">
+                                    <div class="account-dropdown__item">
+                                        <a href="#">
+                                            <i class="zmdi zmdi-account"></i>@userSession.getProfil</a>
+                                    </div>
+                                    <div class="account-dropdown__item">
+                                        <a href="/changepass">
+                                            <i class="zmdi zmdi-settings"></i>@Messages.get("label.change.pass")</a>
+                                    </div>
+                                </div>
+                                <div class="account-dropdown__footer">
+                                    <a href="/logout">
+                                        <i class="zmdi zmdi-power"></i>@Messages.get("label.logout")</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

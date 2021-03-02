@@ -1,0 +1,60 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# An example controller showing a sample home page
+GET     /                           controllers.HomeController.index
+GET     /logout                     controllers.HomeController.logout
+GET     /activation                 controllers.HomeController.activation
+GET     /changepass                 controllers.HomeController.changepass
+GET     /home                       controllers.HomeController.home
+GET     /transactions               controllers.HomeController.transactions
+GET     /compenses                  controllers.HomeController.compenses
+GET     /depots                     controllers.HomeController.depots
+GET     /partners                   controllers.HomeController.partners
+GET     /partners/users             controllers.HomeController.users
+
+#LANG
+GET    /changeLang                  controllers.HomeController.changeLangue(lang: String)
+
+# An example controller showing how to use dependency injection
+GET     /count                      controllers.CountController.count
+# An example controller showing how to write asynchronous code
+GET     /message                    controllers.AsyncController.message
+
+POST      /com/transfer/client/login                        controllers.LoginTransfer.connectInTransfer()
+POST      /com/transfer/client/auth                         controllers.LoginTransfer.authentication()
+POST      /com/transfer/client/activation                   controllers.LoginTransfer.activationConnection()
+GET       /com/transfer/client/data/partner                 controllers.Enquiries.getPartnerData()
+POST      /com/transfer/client/data/transaction             controllers.Enquiries.getInfosPayTransfer()
+
+#OPERATIONS
+POST      /com/transfer/client/fees                         controllers.Operations.checkFees()
+POST      /com/transfer/client/send                         controllers.Operations.sendTransfer()
+POST      /com/transfer/client/pay                          controllers.Operations.payTransfer()
+POST      /com/transfer/client/init/compe                   controllers.Operations.initCompense()
+
+#NOUVEAU TICKET && TICKET EN COURS
+GET       /com/transfer/client/operations                   controllers.Enquiries.getJournal(debut: String ?="", fin: String ?="", page: Int?=1, per_page: Int?=10)
+GET       /com/transfer/client/transactions                 controllers.Enquiries.getTransactions(debut: String ?="", fin: String ?="", partner: String ?="", page: Int?=1, per_page: Int?=10)
+GET       /com/transfer/client/compenses                    controllers.Enquiries.getCompenses(debut: String ?="", fin: String ?="", page: Int?=1, per_page: Int?=10)
+GET       /com/transfer/client/depots                       controllers.Enquiries.getDepots(debut: String ?="", fin: String ?="", page: Int?=1, per_page: Int?=10)
+
+#PARTNER MANAGER
+GET       /com/transfer/partner/list                        controllers.PartnerManager.getPartners(name: String ?="", page: Int?=1, per_page: Int?=10)
+POST      /com/transfer/partner/add                         controllers.PartnerManager.addPartner()
+POST      /com/transfer/partner/depot                       controllers.PartnerManager.depotSender()
+
+
+#USER MANAGER
+GET       /com/transfer/partner/user/get                    controllers.UserController.getUsers(partner: Int)
+POST      /com/transfer/partner/user/add                    controllers.UserController.addUser()
+POST      /com/transfer/partner/user/update                 controllers.UserController.updateUser()
+POST      /com/transfer/partner/user/changePassword         controllers.UserController.changePassword()
+POST      /com/transfer/partner/user/reinitPass             controllers.UserController.reinitPassword()
+POST      /com/transfer/partner/user/lock                   controllers.UserController.lockOrUnlockUser()
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/js/routes                        controllers.HomeController.jsRoutes()
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file)

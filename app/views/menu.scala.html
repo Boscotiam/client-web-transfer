@@ -1,0 +1,94 @@
+@import tools.Const
+@import models.UserSession
+@import play.i18n.Messages
+@(userSession: UserSession)
+<header class="header-mobile d-block d-lg-none">
+    <div class="header-mobile__bar">
+        <div class="container-fluid">
+            <div class="header-mobile-inner">
+                <a class="logo" href="index.html">
+                    <img src="../assets/images/icon/logo.png" alt="CoolAdmin" style="width: 80px;"/>
+                </a>
+                <button class="hamburger hamburger--slider" type="button">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar-mobile">
+        <div class="container-fluid">
+            <ul class="navbar-mobile__list list-unstyled">
+                <li>
+                    <a href="/home">
+                        <i class="fas fa-tachometer-alt"></i>@Messages.get("menu.dashboard")</a>
+                </li>
+                <li>
+                    <a href="/transactions">
+                        <i class="fas fa-table"></i>@Messages.get("menu.transaction")</a>
+                </li>
+                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_PAYER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
+                    <li>
+                        <a href="/compenses">
+                            <i class="zmdi zmdi-hourglass-alt"></i>@Messages.get("menu.compense")</a>
+                    </li>
+                }
+                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_SENDER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
+                    <li>
+                        <a href="/depots">
+                            <i class="zmdi zmdi-hourglass-alt"></i>@Messages.get("menu.depot")</a>
+                    </li>
+                }
+                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
+                <li>
+                    <a href="/partners">
+                        <i class="fas fa-address-card"></i>@Messages.get("menu.partner")</a>
+                </li>
+                }
+            </ul>
+        </div>
+    </nav>
+</header>
+<!-- END HEADER MOBILE-->
+
+<!-- MENU SIDEBAR-->
+<aside class="menu-sidebar d-none d-lg-block">
+    <div class="logo">
+        <a href="#">
+            <img src="../assets/images/icon/logo.png" alt="Cool Admin" style="width: 80px;" />
+        </a>
+    </div>
+    <div class="menu-sidebar__content js-scrollbar1">
+        <nav class="navbar-sidebar">
+            <ul class="list-unstyled navbar__list">
+                <li id="menuHome">
+                    <a href="/home">
+                        <i class="fas fa-tachometer-alt"></i>@Messages.get("menu.dashboard")</a>
+                </li>
+                <li id="menuTransaction">
+                    <a href="/transactions">
+                        <i class="fas fa-table"></i>@Messages.get("menu.transaction")</a>
+                </li>
+                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_PAYER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
+                    <li id="menuCompense">
+                        <a href="/compenses">
+                            <i class="zmdi zmdi-hourglass-alt"></i>@Messages.get("menu.compense")</a>
+                    </li>
+                }
+                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_SENDER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
+                    <li id="menuDepot">
+                        <a href="/depots">
+                            <i class="zmdi zmdi-hourglass-alt"></i>@Messages.get("menu.depot")</a>
+                    </li>
+                }
+                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
+                    <li id="menuPartner">
+                        <a href="/partners">
+                            <i class="fas fa-copy"></i>@Messages.get("menu.partner")</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</aside>

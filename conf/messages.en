@@ -1,0 +1,260 @@
+label.langue = Lang
+label.langue.fr = FRANCAIS
+label.langue.en = ENGLISH
+label.operations = Operations
+label.transactions = Transactions
+label.compenses = Compensates
+label.principal.balance = Principal Balance
+label.fees.balance = Fees Balance
+label.charge.balance = Charge Balance
+label.num = N°
+label.operation = Operation
+label.reference = Reference
+label.reference.pay = Reference Payment
+label.account = Account
+label.amount = Amount
+label.sens = Direction
+label.date = Date
+label.date.pay = Date payment
+label.sender = Sender
+label.status = Status
+label.payer = Payer
+label.partner = Partner
+label.amount = Amount
+label.beneficiairy = Beneficiairy
+label.transmetter = Transmetter
+label.beneficiairy.phone = Beneficiairy phone
+label.country = Country
+label.action = Actions
+label.name = Name
+label.begin = Begin date
+label.end = Begin date
+
+label.customer = Customer
+label.parter = Partner
+
+label.bank = Bank
+
+label.username = Username
+label.password = Password
+label.password.old = Old password
+label.password.new = New password
+label.password.renew = Confirm new password
+label.activation.code = Activation Code
+label.change.pass = Change password
+label.logout = Logout
+
+menu.dashboard = Dashboard
+menu.transaction = Transactions
+menu.compense = Compensations
+menu.depot = Deposites
+menu.partner = Partners
+
+add.new.transfer = Entering the new transfer
+add.new.transfer.amount = Amount
+add.new.transfer.amount.label = The amount to be send
+add.new.transfer.transmetter = Transmetter
+add.new.transfer.transmetter.label = The of the transmetter
+add.new.transfer.transmetter.id = ID Transmetter
+add.new.transfer.transmetter.id.label = The ID  of the transmetter
+add.new.transfer.beneficiairy = Beneficiary
+add.new.transfer.beneficiairy.label = The name of the beneficiary
+add.new.transfer.beneficiairy.phone = Beneficiary Phone
+add.new.transfer.beneficiairy.phone.label = The phone number of the eneficiary
+add.new.transfer.country = country
+add.new.transfer.country.choice = Choice the country destination
+
+
+add.new.compense = Init a new compensation
+add.new.compense.amount = Amount
+add.new.compense.amount.label = The amount to be send
+
+recap.transac = Transaction
+recap.message = Message
+recap.code.payment = Code payment
+recap.service = Service
+recap.amount = Amount
+recap.fees = Fees
+recap.total = Total
+recap.balance = Balance
+recap.balance.princ = Principal Balance
+recap.balance.comm = Fees Balance
+recap.balance.charge = Charge Balance
+
+btn.signin = SIGN IN
+btn.activation = ACTIVATION
+btn.search = SEARCH
+btn.new.transfer = NEW TRANSFER
+btn.new.compense = NEW COMPENSATION
+btn.new.depot = NEW DEPOSITE
+btn.do.payment = DO PAYMENT
+btn.xls = XLS
+btn.pdf = PDF
+btn.send = SEND TRANSFER
+btn.pay = PAY TRANSACTION
+btn.cancel = CANCEL
+btn.print = PRINT TRANSFER
+btn.detail = DETAIL
+btn.init = INIT
+btn.close = CLOSE
+btn.fees = CHECK FEES
+btn.check = CHECK
+btn.close = CLOSE
+btn.add = ADD
+btn.update = UPDATE
+btn.save = SAVE
+btn.new.partner = ADD PARTNER
+btn.new.user = ADD USER
+
+paging.first = First
+paging.prev = preview
+paging.next = Next
+paging.last = Last
+paging.label = pages
+
+label.verify.search = Please put an argument for the search !!!
+label.verify.amount = The amount is required !!!
+label.verify.benef = Please set the name of the beneficiairy !!!
+label.verify.transmetter = Please set the name of the transmetter !!!
+label.verify.transmetter.id = The Id of the transmetter is required !!!
+label.verify.benef.tel = The number phone of the beneficiairy is required !!!
+label.verify.code.payment = The payment code is required !!!
+label.verify.benef.id = The ID of the beneficiairy is required !!!
+label.verify.first.name = Please set the first name of the user !!!
+label.verify.last.name = Please set the last name of the user !!!
+label.verify.tel = The phone number is required !!!
+label.verify.email = The email is required !!!
+label.verify.login = Username is required !!!
+label.verify.profil = Please choice a profil !!!
+label.verify.partner = Set Data of the partner before !!!
+label.verify.partner.name = Set the name of the partner !!!
+label.verify.partner.type = Choice a type of the partner !!!
+label.verify.partner.adress = Set the address of the partner !!!
+label.verify.partner.tel = Set the tel of the partner !!!
+label.verify.partner.email = Set the email of the partner !!!
+label.verify.partner.country = Choice the country of the partner !!!
+
+label.verify.pass.old = Old Pass Word is required !!!
+label.verify.pass.new = Set a new password !!!
+label.verify.pass.renew = Confirm your new password !!!
+label.verify.pass.new.same = Confirme the same passeword !!!
+
+label.empty.list = Empty list !!!
+
+title.modal.print.transfer = Transfer receipt
+pay.transfer = Make a payment transfer
+pay.transfer.code.payment = Payment code
+pay.transfer.code.payment.label = Put the payment code
+pay.transfer.beneficiairy.id = ID of beneficiairy
+pay.transfer.beneficiairy.id.label = The ID of the beneficiairy
+
+check.fees = Check the commissions of an amount
+fees.amount = Amount
+fees.amount.label = The amount to check commissions
+fees.country = country
+fees.country.choice = Choice the country destination
+
+Transaction.data = Transaction Data
+
+label.partner.name = Name
+label.partner.type = Type
+label.partner.adress = Address
+label.partner.tel = Phone Number
+label.partner.email = Email
+
+error.bad.profil = Bad profil
+label.message.empty.user = Empty user
+error.parameter = Incorrect params
+success.show = Operation done
+
+message.hi = Hi
+message.create.user = yours credential access for SunRise transfer
+message.create.user.login = login
+message.create.user.pass = and password
+message.update.user.pass = your new password is
+message.header = SUNRISE EXPRESS
+message.create.partner = your partner accounts for SunRise Transfer are created. Yours credentials will be communicated to you later.
+message.depot.partner = a deposite SUNRISE TRANSFER is done for you
+message.depot.transaction = Transaction ID
+message.depot.balance = Your new Charge balance is
+
+
+title.modal.detail.partner = Detail Partner
+label.partner.name = Name
+label.partner.name = Name
+label.partner.type = Type
+label.partner.adresse = Address
+label.partner.tel = Tel
+label.partner.email = Email
+label.partner.country = Country
+label.partner.account.princ = Principal account
+label.partner.account.comm = Fees account
+label.partner.account.charge = Charge account
+label.partner.balance.princ = Principal balance
+label.partner.balance.comm = Fees balance
+label.partner.balance.charge = Charge balance
+label.partner.bank.data = Bank Data
+label.detail.partner = Detail of this partner
+label.update.partner =  Update some data
+label.depot.partner =  Do a deposite
+label.users.partner = Users of this partner
+label.transactions.partner =  Transactions of this partner
+do.depot = Do a deposite SENDER
+partner.depot.amount = Amount
+partner.depot.amount.label = The amount of the deposite
+
+add.new.partner = Add a new partner
+partner.name = Name
+partner.name.label = The name of the partner
+partner.type = Type
+partner.type.sender = SENDER
+partner.type.payer = PAYER
+partner.type.choice = Choice the type of the partner
+partner.adress = Adress
+partner.adress.label = The address of the partner
+partner.tel = Phone number
+partner.tel.label = The phone number of the partner
+partner.email = Email
+partner.email.label = The email of the partner
+partner.country = Country
+partner.country.choice = Choice the country of the partner
+new.partner.data = Data of the partener
+new.partner.data.bank = Bank data of the partener
+partner.bank = Bank
+partner.bank.choice = Choice the bank of the partner
+partner.code.guichet = Code guichet
+partner.code.guichet.label = The Code guichet of the partner
+partner.bank.account = Bank Account
+partner.bank.account.label = The account bank of this partner
+partner.rib = RIB
+partner.rib.label = The RIB key
+
+menu.partner.user.list = List users
+add.new.user = Add new user
+update.user = Update user
+user.first.name = First Name
+user.first.name.label = The first name of the user
+user.last.name = Last Name
+user.last.name.label = The last name of the user
+user.tel = Phone
+user.tel.label = The phone number of the user
+user.email = Email
+user.email.label = The email of the user
+user.login = Login
+user.login.choice = The username of the user
+user.profil = Profil
+user.profil.choice = Choice a profil
+user.profil.choice.label = Profil user
+user.date.creation = Date create
+user.verrou = Verrou
+
+label.btn.update.user = Update the user
+label.btn.block.user = Block the user
+label.btn.unblock.user = Unblock the user
+label.btn.reinit.user = Reinit the password of the user
+
+dialog.confirm = Confirmation
+
+label.message.block = Did you want to lock
+label.message.deblock = Did you want to unlock
+label.message.reinit = Did you want to reinit the password of

@@ -1,0 +1,404 @@
+@import tools.Const
+@import models.UserSession
+@import play.i18n.Messages
+@(userSession: models.UserSession)
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <meta name="author" content="Hau Nguyen">
+    <meta name="keywords" content="au theme template">
+
+    <!-- Title Page-->
+    <title>SunRize Express</title>
+
+    <script type="text/javascript">
+       var profil_admin = '@Const.PROFIL_ADMIN';
+       var profil_sender = '@Const.PROFIL_SENDER';
+       var profil_payer = '@Const.PROFIL_PAYER';
+       var profilUser = '@userSession.getProfil()';
+
+       var labelVerifyAmount = '@Messages.get("label.verify.amount")';
+       var labelPartner = '@Messages.get("label.partner")';
+       var labelPartnerUsers = '@Messages.get("menu.partner.user.list")';
+
+       var labelUpdate = '@Messages.get("label.btn.update.user")';
+       var labelBlock = '@Messages.get("label.btn.block.user")';
+       var labelUnBlock = '@Messages.get("label.btn.unblock.user")';
+       var labelReinit = '@Messages.get("label.btn.reinit.user")';
+
+       var labelMessageBlock = '@Messages.get("label.message.block")';
+       var labelMessageDeblock = '@Messages.get("label.message.deblock")';
+       var labelMessageReinit = '@Messages.get("label.message.reinit")';
+
+       var labelProfil = '@Messages.get("user.profil.choice.label")';
+
+       var labelVerifyNom = '@Messages.get("label.verify.last.name")';
+       var labelVerifyPrenom = '@Messages.get("label.verify.first.name")';
+       var labelVerifyTel = '@Messages.get("label.verify.tel")';
+       var labelVerifyEmail = '@Messages.get("label.verify.email")';
+       var labelVerifyLogin = '@Messages.get("label.verify.login")';
+       var labelVerifyProfil = '@Messages.get("label.verify.profil")';
+
+</script>
+
+    <!-- Fontfaces CSS-->
+    <link href="../assets/css/font-face.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link href="../assets/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link href="../assets/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="../assets/css/theme.css" rel="stylesheet" media="all">
+    <link href="../assets/css/datepicker3.css" rel="stylesheet" media="all">
+    <link href="../assets/stylesheets/main.css" rel="stylesheet" media="all">
+
+    <script type="text/javascript">
+
+        var labelPagingFirst = '@Messages.get("paging.first")';
+        var labelPagingPrev = '@Messages.get("paging.prev")';
+        var labelPagingNext = '@Messages.get("paging.next")';
+        var labelPagingLast = '@Messages.get("paging.last")';
+        var labelPaging = '@Messages.get("paging.label")';
+
+        var labelVerifySearch = '@Messages.get("label.verify.search")';
+
+    </script>
+
+</head>
+
+<body class="animsition">
+<div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    @menu(userSession)
+    <!-- END MENU SIDEBAR-->
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+
+        <!-- HEADER DESKTOP-->
+        @header(userSession)
+        <!-- END HEADER DESKTOP-->
+
+        <!-- MAIN CONTENT-->
+        <div class="main-content">
+
+
+
+            <ol id="olShowError"></ol>
+            <ol id="olShowErrorWarning"></ol>
+            <ol id="olShowSuccess"></ol>
+
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- DATA TABLE -->
+                            <h3 id="titlePage" class="title-5 m-b-35"></h3>
+                            <div class="table-data__tool">
+                                <div class="table-data__tool-left">
+                                    <!--<div class="rs-select2&#45;&#45;light rs-select2&#45;&#45;md">
+                                        <input type="text" id="begin" name="text-input" placeholder="@Messages.get("label.name")" class="form-control">
+                                    </div>
+                                    <button id="btnSearch" class="au-btn au-btn-icon btn-primary au-btn&#45;&#45;small">
+                                        <i class="zmdi zmdi-search"></i>@Messages.get("btn.search")</button>-->
+                                </div>
+                                <div class="table-data__tool-right">
+                                    <button class="au-btn au-btn-icon btn btn-info au-btn--small" data-toggle="modal" data-target="#modalNewUser">
+                                        <i class="zmdi zmdi-plus"></i>@Messages.get("btn.new.user")</button>
+                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                        <i class="zmdi zmdi-collection-pdf"></i>@Messages.get("btn.pdf")</button>
+                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                        <i class="zmdi zmdi-collection-text"></i></i>@Messages.get("btn.xls")</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive table--no-card m-b-30">
+                                <table class="table table-data2">
+                                    <thead>
+                                    <tr>
+                                        <th>@Messages.get("label.num")</th>
+                                        <th>@Messages.get("user.first.name")</th>
+                                        <th>@Messages.get("user.last.name")</th>
+                                        <th>@Messages.get("user.tel")</th>
+                                        <th>@Messages.get("user.email")</th>
+                                        <th>@Messages.get("user.profil")</th>
+                                        <th>@Messages.get("user.verrou")</th>
+                                        <th>@Messages.get("user.date.creation")</th>
+                                        <th>@Messages.get("label.action")</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div id="divPagination" class="col-md-4"></div>
+                                <div class="col-md-2 pagingLabel" style="margin-top: 20px;"><h5 class="text-primary" id="pagingBottom"></h5></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="copyright">
+                                <p>Copyright © 2021 SunRize Express by memaone</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade show" id="modalNewUser" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediumModalLabel">@Messages.get("add.new.user")</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ol id="olShowErrorAdd"></ol>
+                <ol id="olShowSuccessAdd"></ol>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("user.first.name") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="text" id="userFirstName" name="text-input" placeholder="@Messages.get("user.first.name")" class="userAdd form-control">
+                        <small class="form-text text-muted">@Messages.get("user.first.name.label")</small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("user.last.name") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="text" id="userLastName" name="text-input" placeholder="@Messages.get("user.last.name")" class="userAdd form-control">
+                        <small class="form-text text-muted">@Messages.get("user.last.name.label")</small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("user.tel") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="text" id="userTel" name="text-input" placeholder="@Messages.get("user.tel")" class="userAdd form-control">
+                        <small class="form-text text-muted">@Messages.get("user.tel.label")</small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("user.email") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="text" id="userEmail" name="text-input" placeholder="@Messages.get("user.email")" class="userAdd form-control">
+                        <small class="form-text text-muted">@Messages.get("user.email.label")</small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("user.login") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="text" id="userLogin" name="text-input" placeholder="@Messages.get("user.login")" class="userAdd form-control">
+                        <small class="form-text text-muted">@Messages.get("user.login.label")</small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("user.profil") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <select name="select" id="userProfil" class="form-control">
+                        </select>
+                        <small class="form-text text-muted">@Messages.get("user.profil.choice")</small>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnCancelAdd" type="button" class="btn btn-secondary" data-dismiss="modal">@Messages.get("btn.cancel")</button>
+                <button id="btnAdd" type="button" class="btn btn-primary"> <i class="fa fa-spinner fa-spin loader"></i> @Messages.get("btn.add")</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" id="modalUpdateUser" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">@Messages.get("update.user")</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ol id="olShowErrorUpdate"></ol>
+                <ol id="olShowSuccessUpdate"></ol>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("user.first.name") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="text" id="userFirstNameUpdate" name="text-input" placeholder="@Messages.get("user.first.name")" class="userUpdate form-control">
+                        <small class="form-text text-muted">@Messages.get("user.first.name.label")</small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("user.last.name") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="text" id="userLastNameUpdate" name="text-input" placeholder="@Messages.get("user.last.name")" class="userUpdate form-control">
+                        <small class="form-text text-muted">@Messages.get("user.last.name.label")</small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("user.tel") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="text" id="userTelUpdate" name="text-input" placeholder="@Messages.get("user.tel")" class="userUpdate form-control">
+                        <small class="form-text text-muted">@Messages.get("user.tel.label")</small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("user.email") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="text" id="userEmailUpdate" name="text-input" placeholder="@Messages.get("user.email")" class="userUpdate form-control">
+                        <small class="form-text text-muted">@Messages.get("user.email.label")</small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("user.profil") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <select name="select" id="userProfilUpdate" class="form-control">
+                        </select>
+                        <small class="form-text text-muted">@Messages.get("user.profil.choice")</small>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnCancelUpdate" type="button" class="btn btn-secondary" data-dismiss="modal">@Messages.get("btn.cancel")</button>
+                <button id="btnUpdate" type="button" class="btn btn-primary"> <i class="fa fa-spinner fa-spin loader"></i> @Messages.get("btn.update")</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" id="modalDialog" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticModalLabel">@Messages.get("dialog.confirm")</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="messageDialog">
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button id="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button id="btnConfirm" type="button" class="btn btn-primary">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Jquery JS-->
+<script src="../assets/vendor/jquery-3.2.1.min.js"></script>
+<!-- Bootstrap JS-->
+<script src="../assets/vendor/bootstrap-4.1/popper.min.js"></script>
+<script src="../assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+<!-- Vendor JS       -->
+<script src="../assets/vendor/slick/slick.min.js">
+</script>
+<script src="../assets/vendor/wow/wow.min.js"></script>
+<script src="../assets/vendor/animsition/animsition.min.js"></script>
+<script src="../assets/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+</script>
+<script src="../assets/vendor/counter-up/jquery.waypoints.min.js"></script>
+<script src="../assets/vendor/counter-up/jquery.counterup.min.js">
+</script>
+<script src="../assets/vendor/circle-progress/circle-progress.min.js"></script>
+<script src="../assets/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="../assets/vendor/chartjs/Chart.bundle.min.js"></script>
+<script src="../assets/vendor/select2/select2.min.js">
+</script>
+
+<!-- Main JS-->
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/moment.js"></script>
+<script src="../assets/js/jquery-ui.min.js"></script>
+<script src="../assets/js/bootstrap-datepicker.js"></script>
+
+<script src="@controllers.routes.HomeController.jsRoutes()" type="text/javascript"></script>
+<script src="../assets/javascripts/jquery.twbsPagination.js"></script>
+<script src="../assets/javascripts/api.js"></script>
+<script src="../assets/javascripts/users.js"></script>
+
+<script>
+    (function($){
+    $.fn.datepicker.dates['fr'] = {
+    days: ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"],
+    daysShort: ["dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam."],
+    daysMin: ["d", "l", "ma", "me", "j", "v", "s"],
+    months: ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"],
+    monthsShort: ["janv.", "févr.", "mars", "avril", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."],
+    today: "Aujourd'hui",
+    monthsTitle: "Mois",
+    clear: "Effacer",
+    weekStart: 1,
+    format: "yyyy-mm-dd"
+    };
+    }(jQuery));
+
+
+    $('.datepicker').datepicker({
+    language: 'fr',
+    autoclose: true,
+    todayHighlight: true
+    })
+</script>
+
+</body>
+
+</html>
+<!-- end document-->
