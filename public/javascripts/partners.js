@@ -242,7 +242,6 @@ $(document)
         $('#myTabs a').click(function (e) {
 
             var selectedTab = $(this).attr('id');
-            //console.log("selectedTab: " + selectedTab);
 
             var tabedBank = true;
             var continu = true;

@@ -284,8 +284,7 @@ public class Operations extends Controller {
             Logger.info("requestingService URL: " + url);
 
             eventualResponse = ws.url(url)
-                    //.setHeader("Authorization", session().get(Const.SESSION_TOKEN_APP))
-                    .setHeader("Authorization", Const.SESSION_TOKEN_APP)
+                    .setHeader("Authorization", session().get(Const.SESSION_TOKEN_APP))
                     .setAuth("user",
                             "password",
                             WSAuthScheme.BASIC)

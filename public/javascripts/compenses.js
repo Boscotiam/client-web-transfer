@@ -154,7 +154,6 @@ $(document)
                     else {
                         doShowErrorAdd(json.message);
                     }
-                    console.log(json);
                     $(".loader").fadeOut("1000");
                     $('#btnCompense').attr("disabled", false);
 

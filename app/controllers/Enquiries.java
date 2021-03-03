@@ -388,8 +388,7 @@ public class Enquiries extends Controller {
             Logger.info("requestinggetPartnerData URL: " + url);
 
             eventualResponse = ws.url(url)
-                    //.setHeader("Authorization", session(Const.SESSION_TOKEN_APP))
-                    .setHeader("Authorization", Const.SESSION_TOKEN_APP)
+                    .setHeader("Authorization", session(Const.SESSION_TOKEN_APP))
                     .setAuth("user",
                             "password",
                             WSAuthScheme.BASIC)
@@ -427,8 +426,7 @@ public class Enquiries extends Controller {
             Logger.info("requestingGetInfosPayTransfer URL: " + url);
 
             eventualResponse = ws.url(url)
-                    //.setHeader("Authorization", session().get(Const.SESSION_TOKEN_APP))
-                    .setHeader("Authorization", Const.SESSION_TOKEN_APP)
+                    .setHeader("Authorization", session().get(Const.SESSION_TOKEN_APP))
                     .setAuth("user",
                             "password",
                             WSAuthScheme.BASIC)

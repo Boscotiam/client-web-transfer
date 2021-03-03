@@ -157,7 +157,6 @@ $(document)
                     else {
                         doShowErrorAdd(data.message);
                     }
-                    console.log(json);
                     $(".loader").fadeOut("1000");
                     //$('#btnSearchPayment').attr("disabled", false);
 

@@ -19,9 +19,7 @@ public class Const {
 
     public static final String SESSION_PROFIL = "profil";
 
-    //public static final String SESSION_TOKEN_APP = "session";
-
-    public static String SESSION_TOKEN_APP;
+    public static final String SESSION_TOKEN_APP = "session";
 
     public static final String SESSION_PARTNER_NAME = "partnername";
 

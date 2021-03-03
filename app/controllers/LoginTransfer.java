@@ -89,7 +89,7 @@ public class LoginTransfer extends Controller {
                 session(Const.SESSION_CONSUMER_ID, connection.getConsumerId());
                 session(Const.SESSION_CONSUMER_SECRET, connection.getConsumerSecret());
 
-                authentication();
+                //authentication();
             }
 
             Log.logActionOutput(connection.toString());
@@ -124,9 +124,9 @@ public class LoginTransfer extends Controller {
             if(authentication.getCode() == Const.HTTP_SUCCESS){
                 authentication.setToken(jsonData.findPath("token").textValue());
                 Logger.info("Token: " + authentication.getToken());
-                //session(Const.SESSION_TOKEN_APP, authentication.getToken());
+                session(Const.SESSION_TOKEN_APP, authentication.getToken());
                 //session().put(Const.SESSION_TOKEN_APP, authentication.getToken());
-                Const.SESSION_TOKEN_APP = authentication.getToken();
+                //Const.SESSION_TOKEN_APP = authentication.getToken();
             }
 
             Log.logActionOutput(authentication.toString());
@@ -297,8 +297,7 @@ public class LoginTransfer extends Controller {
             Logger.info("requestingServiceWithToken URL: " + url);
 
             eventualResponse = ws.url(url)
-                    //.setHeader("Authorization", session().get(Const.SESSION_TOKEN_APP))
-                    .setHeader("Authorization", Const.SESSION_TOKEN_APP)
+                    .setHeader("Authorization", session().get(Const.SESSION_TOKEN_APP))
                     .setAuth("user",
                             "password",
                             WSAuthScheme.BASIC)

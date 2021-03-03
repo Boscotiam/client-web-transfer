@@ -7,9 +7,6 @@ $(document)
 
         $(".loader").fadeOut("1000");
 
-        var login;
-        var pass;
-
         $('#btn-activate').click(
             function(e) {
                 $('#btn-activate').attr("disabled", true);
@@ -18,7 +15,6 @@ $(document)
                 var data = {
                       "activation" : activation
                 };
-
                 appRoutes.controllers.LoginTransfer.activationConnection().ajax({
                     data : JSON.stringify(data),
                     contentType : 'application/json',
@@ -32,13 +28,16 @@ $(document)
                             $('#erreur').fadeIn();
                             $('#erreur').append(data.message);
                         }
-                        console.log(data);
                         $(".loader").fadeOut("1000");
                         $('#btn-activate').attr("disabled", false);
 
                     },
-                     error: function (data) {
-                         console.log(data);
+                    error: function (xmlHttpReques, chaineRetourne, objetExeption) {
+                        if(objetExeption == "Unauthorized"){
+                            $(location).attr('href',"/");
+                        }
+                        $('#btn-login').attr("disabled", false);
+                        $(".loader").fadeIn("1000");
                     }
                 });
             });
@@ -48,11 +47,9 @@ $(document)
                 $('#btn-activate').attr("disabled", true);
                 $(".loader").fadeIn("1000");
                 var activation = $('#activation').val();
-
                 var data = {
                       "activation" : activation
                 };
-
                 appRoutes.controllers.LoginTransfer.activationConnection().ajax({
                     data : JSON.stringify(data),
                     contentType : 'application/json',
@@ -66,19 +63,20 @@ $(document)
                             $('#erreur').fadeIn();
                             $('#erreur').append(data.message);
                         }
-                        console.log(data);
                         $(".loader").fadeOut("1000");
                         $('#btn-activate').attr("disabled", false);
 
                     },
-                     error: function (data) {
-                         console.log(data);
+                    error: function (xmlHttpReques, chaineRetourne, objetExeption) {
+                        if(objetExeption == "Unauthorized"){
+                            $(location).attr('href',"/");
+                        }
+                        $('#btn-login').attr("disabled", false);
+                        $(".loader").fadeIn("1000");
                     }
                 });
 
               }
             });
-
-
 
     });

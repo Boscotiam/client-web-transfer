@@ -100,7 +100,6 @@ $(document)
 
 
                     } else if(json.code == 201){
-                        console.log(json.message);
                         var totalTransactions = json.totalTransactions;
                         var principalBalance = json.principalBalance;
                         var feesBalance = json.feesBalance;
@@ -198,7 +197,6 @@ $(document)
                     else {
                         doShowErrorAdd(json.message);
                     }
-                    console.log(json);
                     $(".loader").fadeOut("1000");
                     $('#btnSend').attr("disabled", false);
 
@@ -256,7 +254,6 @@ $(document)
                     else {
                         doShowErrorFees(json.message);
                     }
-                    console.log(json);
                     $(".loader").fadeOut("1000");
                     $('#btnCheckFees').attr("disabled", false);
 
@@ -328,7 +325,6 @@ $(document)
         $('#btnSearchPayment').click(
             function(e) {
             var codePayment = $('#codePayment').val();
-            console.log("codePayment: " + codePayment);
             if(codePayment == ''){
                 doShowErrorPay(labelVerifyCodePayment);
             }
@@ -365,7 +361,6 @@ $(document)
                     else {
                         doShowErrorAdd(json.message);
                     }
-                    //console.log(json);
                     $(".loader").fadeOut("1000");
                     //$('#btnSearchPayment').attr("disabled", false);
 
@@ -416,7 +411,6 @@ $(document)
                     else {
                         doShowErrorPay(json.message);
                     }
-                    console.log(json);
                     $(".loader").fadeOut("1000");
                     $('#btnPay').attr("disabled", false);
 
