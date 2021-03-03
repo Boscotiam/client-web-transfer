@@ -4,7 +4,7 @@
 
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
-GET     /logout                     controllers.HomeController.logout
+GET     /logout                     controllers.LoginTransfer.disConnection()
 GET     /activation                 controllers.HomeController.activation
 GET     /changepass                 controllers.HomeController.changepass
 GET     /home                       controllers.HomeController.home

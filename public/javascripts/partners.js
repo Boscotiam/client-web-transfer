@@ -269,7 +269,7 @@ $(document)
 
         });
 
-        $('#btnSaveDepot').click(function (e) {
+        $('#btnAdd').click(function (e) {
             verifyBeforeAdd();
         });
 

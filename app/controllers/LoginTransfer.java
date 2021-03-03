@@ -3,10 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
-import models.Authentication;
-import models.Connection;
-import models.Partner;
-import models.PartnerResponse;
+import models.*;
 import play.Logger;
 import play.Play;
 import play.libs.F;
@@ -216,6 +213,42 @@ public class LoginTransfer extends Controller {
             return ok(partnerResponse.toObjectNode());
         });
 
+    }
+
+    public Result disConnection() {
+        Log.logActionHeader("disConnection");
+        ObjectNode json = Json.newObject();
+
+        json.put("consumerId", session(Const.SESSION_CONSUMER_ID));
+        json.put("deviceId", session(Const.SESSION_DEVICE_ID));
+        CompletionStage<JsonNode> servResponse = null;
+
+        String url = Play.application().configuration().getString("disconnect.url");
+
+        Logger.info("Token: " + Const.SESSION_TOKEN_APP);
+        Logger.info("consumerId: " + session(Const.SESSION_CONSUMER_ID));
+        Logger.info("deviceId: " + session(Const.SESSION_DEVICE_ID));
+        if (Const.SESSION_TOKEN_APP == null) {
+            ObjectNode node = Utils.getObjectNode(301, "WS Client Error");
+            Log.logActionOutput(node.toString());
+            return unauthorized(node);
+        }
+        servResponse = requestingServiceWithToken(json, url).thenApply(WSResponse::asJson);
+        if (servResponse == null) {
+            ObjectNode node = Utils.getObjectNode(301, "WS Client Error");
+            Log.logActionOutput(node.toString());
+            return unauthorized(node);
+        }
+        JsonNode jsonData = servResponse.toCompletableFuture().join();
+
+        SimpleResponse simpleResponse = new SimpleResponse();
+        simpleResponse.setCode(jsonData.findPath("code").intValue());
+        simpleResponse.setMessage(jsonData.findPath("message").textValue());
+
+        Log.logActionOutput(simpleResponse.toString());
+        session().clear();
+        return redirect(controllers.routes.HomeController.index());
+        //return ok(simpleResponse.toObjectNode());
     }
 
     public CompletionStage<WSResponse> requestingService(ObjectNode json, String url){

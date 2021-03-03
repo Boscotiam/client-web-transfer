@@ -7,6 +7,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import tools.Const;
 import tools.Log;
+import tools.Utils;
 import views.html.*;
 
 import java.util.UUID;
@@ -16,6 +17,7 @@ import java.util.UUID;
  * to the application's home page.
  */
 public class HomeController extends Controller {
+
 
     /**
      * An action that renders an HTML page with a welcome message.
@@ -38,11 +40,6 @@ public class HomeController extends Controller {
         UUID uuid = UUID.randomUUID();
         session(Const.SESSION_DEVICE_ID, uuid.toString());
         Logger.info("SESSION DEVICE ID: " + session(Const.SESSION_DEVICE_ID));
-        return ok(index.render());
-    }
-
-    public Result logout() {
-        session().clear();
         return ok(index.render());
     }
 
@@ -146,5 +143,6 @@ public class HomeController extends Controller {
                 routes.javascript.UserController.lockOrUnlockUser()
         ));
     }
+
 
 }
