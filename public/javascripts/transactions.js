@@ -2,8 +2,8 @@ $(document)
     .ready(
     function(e) {
 
+        $("#loader").fadeOut("1000");
         $(".loader").fadeOut("1000");
-        //$(".imloadAdd").fadeOut("1000");
         $('#menuTransaction').addClass('active');
 
         $('.datepicker').datepicker({
@@ -16,7 +16,7 @@ $(document)
         getSession();
 
         function getSession(){
-            $(".loader").fadeIn("1000");
+            $("#loader").fadeIn("1000");
             appRoutes.controllers.Enquiries.getPartnerData().ajax({
                 success: function (json) {
                     if (json.code == 200) {
@@ -24,19 +24,19 @@ $(document)
                     }else{
                         $(location).attr('href',"/");
                     }
-                    $(".loader").fadeOut("1000");
+                    $("#loader").fadeOut("1000");
                 },
                 error: function (xmlHttpReques,chaineRetourne,objetExeption) {
                     if(objetExeption == "Unauthorized"){
                         $(location).attr('href',"/");
                     }
-                    $(".loader").fadeOut("1000");
+                    $("#loader").fadeOut("1000");
                 }
             });
         }
 
         function getTransactions(begin, end, partner, page){
-            $(".imload").fadeIn("1000");
+            $("#loader").fadeIn("1000");
             $('#tbody').html('');
             $('#totalTransactions').html('');
             $('#principalBalance').html('');
@@ -106,7 +106,7 @@ $(document)
                     }else{
                         $(location).attr('href',"/");
                     }
-                    $(".imload").fadeOut("1000");
+                    $("#loader").fadeOut("1000");
                 },
                 error: function (xmlHttpReques,chaineRetourne,objetExeption) {
 
@@ -114,7 +114,7 @@ $(document)
                         $(location).attr('href',"/");
                     }
 
-                    $(".imload").fadeOut("1000");
+                    $(".loader").fadeOut("1000");
                 }
             });
         }
