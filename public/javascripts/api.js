@@ -215,6 +215,17 @@ function doShowErrorFees(message){
     $('#showErrorFees').fadeIn();
     setTimeout(function(){ $('#showErrorFees').fadeOut(); }, 5000);
 }
+function doShowErrorOpen(message){
+    $('#olShowErrorOpen').find('div#showErrorOpen').remove();
+    var html = '<div class="alert alert-danger alertWidth" id="showErrorOpen" role="alert">' +
+        '<span class="fa fa-exclamation-triangle" aria-hidden="true"></span>' +
+        '<span class="sr-only">Error:</span></div>';
+    $('#olShowErrorOpen').prepend(html);
+    $('#showErrorOpen').html('');
+    $('#showErrorOpen').append(message);
+    $('#showErrorOpen').fadeIn();
+    setTimeout(function(){ $('#showErrorOpen').fadeOut(); }, 5000);
+}
 
 function doShowErrorPay(message){
     $('#olShowErrorPay').find('div#showErrorPay').remove();

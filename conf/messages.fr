@@ -29,6 +29,9 @@ label.action = Actions
 label.name = Nom
 label.begin = Date début
 label.end = Date fin
+label.guichet = Guichet
+label.guichet.code = Code
+
 
 label.customer = client
 label.parter = Partenaire
@@ -48,6 +51,7 @@ menu.dashboard = Tableau de bord
 menu.transaction = Transactions
 menu.compense = Compenses
 menu.depot = Dépôts
+menu.depot.guichet = Dépôts guichets
 menu.partner = Partenaires
 
 add.new.transfer = Saisie nouveau transfert
@@ -55,6 +59,8 @@ add.new.transfer.amount = Montant
 add.new.transfer.amount.label = Le montant à envoyer
 add.new.transfer.transmetter = Transmetteur
 add.new.transfer.transmetter.label = Le nom du transmetteur
+add.new.transfer.transmetter.tel = Téléphone transmetteur
+add.new.transfer.transmetter.tel.label = Le numéro de téléphone du transmetteur
 add.new.transfer.transmetter.id = Id tranmetteur
 add.new.transfer.transmetter.id.label = Identification du transmetteur
 add.new.transfer.beneficiairy = Bénéficiaire
@@ -97,7 +103,9 @@ btn.print = IMPRIMER
 btn.detail = DETAIL
 btn.init = INITIER
 btn.close = FERMER
+btn.open = OUVRIR
 btn.fees = CALCUL COMMISSIONS
+btn.open.guichet = OUVRIR GUICHET
 btn.check = CALCULER
 btn.close = FERMER
 btn.add = AJOUTER
@@ -105,6 +113,7 @@ btn.update = MODIFER
 btn.save = ENREGISTRER
 btn.new.partner = AJOUT PARTENAIRE
 btn.new.user = AJOUT UTILISATEUR
+btn.new.guichet = AJOUT GUICHET
 
 paging.first = Première
 paging.prev = Précédente
@@ -116,6 +125,7 @@ label.verify.search = Donner un paramètre de recherche !!!
 label.verify.amount = Le montant est requis !!!
 label.verify.benef = Donner le nom du bénéficiaire !!!
 label.verify.transmetter = Donner le nom du transmetteur !!!
+label.verify.transmetter.tel = Donner le numéro de téléphone du transmetteur !!!
 label.verify.transmetter.id = l'identification du transmetteur est requise !!!
 label.verify.benef.tel = Donner le numéro de téléphone du bénéficiaire !!!
 label.verify.code.payment = Le code de paiement est requis !!!
@@ -127,12 +137,16 @@ label.verify.email = Donner l'email de l'utilisateur !!!
 label.verify.login = Le login est requis !!!
 label.verify.profil = Choisir un profil !!!
 label.verify.partner = Saisir d'abord les données du partenaire !!!
+label.verify.partner.admin = Saisir les infos de l'admin du partenaire!!!
 label.verify.partner.name = Donner le nom du partenaire !!!
 label.verify.partner.type = Choisir le type du partenaire !!!
 label.verify.partner.adress = Donner l'adresse du partenaire !!!
 label.verify.partner.tel = Donner le numéro de téléphone du partenaire !!!
 label.verify.partner.email = Donner l'email du partenaire !!!
 label.verify.partner.country = Choisir le pays !!!
+
+label.verify.guichet.name = Le nom du guichet est requis !!!
+label.verify.guichet.adresse = Donner l'adresse du guichet !!!
 
 label.verify.pass.old = L'ancien mot de passe est requis !!!
 label.verify.pass.new = Donner le nouveau mot de passe !!!
@@ -154,6 +168,10 @@ fees.amount.label = Le montant à vérifier
 fees.country = Pays
 fees.country.choice = Choisir le paus
 
+open.guichet = Ouvrir guichet
+code.guichet = code guichet
+code.guichet.label = Le code du guichet à ouvrir
+
 Transaction.data = Données de la transaction
 
 label.partner.name = Nom
@@ -164,6 +182,7 @@ label.partner.email = Email
 
 error.bad.profil = Profil inconnu
 label.message.empty.user = Liste utilisateurs vide
+label.message.empty.guichet = Liste guichets vide
 error.parameter = Paramètres incorrects
 success.show = Opération faite avec succès
 
@@ -205,6 +224,7 @@ partner.name.label = Le nom du partenaire
 partner.type = Type
 partner.type.sender = ENVOYEUR
 partner.type.payer = PAYEUR
+partner.type.mixte = MIXTE
 partner.type.choice = Choisir le type du partenaire
 partner.adress = Adresse
 partner.adress.label = L'adresse du partenaire
@@ -216,6 +236,7 @@ partner.country = Pays
 partner.country.choice = Choisir le pays du partenaire
 new.partner.data = Données du partenaire
 new.partner.data.bank = Données bancaires du partenaire
+new.partner.data.admin = Admin partenaire
 partner.bank = Banque
 partner.bank.choice = Choice la banque du partenaire
 partner.code.guichet = Code guichet
@@ -224,12 +245,18 @@ partner.bank.account = Compte bancaire
 partner.bank.account.label = Le numéro de compte bancaire du partenaire
 partner.rib = RIB
 partner.rib.label = Le RIB du partenaire
+partner.admin.nom = Nom admin
+partner.admin.nom.label = Nom de l'administeur
+partner.admin.prenom = Prénom admin
+partner.admin.nom.label = Prénom de l'administrateur
+partner.admin.login = Login admin
+partner.admin.login.label = Login de l'administrateur
 
 do.depot = Faire un dépôt SENDER
 partner.depot.amount = Montant
 partner.depot.amount.label = Le montant du dépôt
 
-menu.partner.user.list = Liste utilisateurs
+menu.partner.user.list = Utilisateurs
 add.new.user = Ajout nouvel utilisateur
 update.user = Modifier utilisateur
 user.first.name = Prenom
@@ -241,20 +268,48 @@ user.tel.label = Le numéro de téléphone de l'utilisateur
 user.email = Email
 user.email.label = L'email de l'utilisateur
 user.login = Login
-user.login.choice = Le login de l'utilisateur
+user.login.label = Le login de l'utilisateur
 user.profil = Profil
 user.profil.choice = Choisir un profil
 user.profil.choice.label = Profil utilisateur
 user.date.creation = Date création
 user.verrou = Verrou
 
+menu.partner.guichet.list = Guichets
+add.new.guichet = Ajout nouvel guichet
+guichet.code = Code
+guichet.code.label = Le code du guichet
+guichet.compte = Numéro compte
+guichet.solde = Solde
+guichet.libelle = Libellé
+guichet.libelle.label = Le libellé du guichet
+guichet.adresse = Adresse
+guichet.adresse.label = l'adresse du guichet
+guichet.date.create = Date créaction
+guichet.etat = Etat
+guichet.open = Ouvert
+
 label.btn.update.user = Mofifier l'utilisateur
 label.btn.block.user = Bloquer l'utilisateur
 label.btn.unblock.user = Débloquer l'utilisateur
 label.btn.reinit.user = Réinitialiser le mot de passe de l'utilisateur
 
+label.btn.lock.guichet = Désactiver guichet
+label.btn.unlock.guichet = Résactiver guichet
+
+
 dialog.confirm = Confirmation
 
+label.message.lock = Voulez vous désactiver
+label.message.unlock = Voulez vous Résactiver
 label.message.block = Voulez vous bloquer
 label.message.deblock = Voulez vous débloquer
 label.message.reinit = Voulez vous réinitialiser le mot de passe
+
+update.data.transaction = Mise à jour infos transaction
+transaction.code = Transaction
+transaction.code.label = Le code de la transaction
+transmetter = Transmetteur
+transmetter.label = Le transmetteur de l'opération
+beneficiaire = Bénéficiaire
+beneficiaire.label = Le bénéficiaire de l'opération

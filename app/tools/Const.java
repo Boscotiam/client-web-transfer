@@ -21,6 +21,8 @@ public class Const {
 
     public static final String SESSION_TOKEN_APP = "session";
 
+    public static final String SESSION_PARTNER_ID = "partnerid";
+
     public static final String SESSION_PARTNER_NAME = "partnername";
 
     public static final String SESSION_PARTNER_TYPE = "partnertype";
@@ -44,6 +46,8 @@ public class Const {
     public static final String SESSION_PARTNER_BALANCE_COMM = "partnerbalancecomm";
 
     public static final String SESSION_PARTNER_BALANCE_CHARGE = "partnerbalancecharge";
+
+    public static final String SESSION_GUICHET = "guichet";
 
     public static String DEFAULT_LANG;
 
@@ -69,15 +73,39 @@ public class Const {
 
     public static int HTTP_SUCCESS;
 
+    public static int PROFIL_ADMIN_ID;
+
+    public static int PROFIL_SENDER_ID;
+
+    public static int PROFIL_PAYER_ID;
+
+    public static int PROFIL_MIXTE_ID;
+
+    public static int PROFIL_AGENT_SENDER_ID;
+
+    public static int PROFIL_AGENT_PAYER_ID;
+
+    public static int PROFIL_AGENT_MIXTE_ID;
+
     public static String PROFIL_ADMIN;
 
     public static String PROFIL_SENDER;
 
     public static String PROFIL_PAYER;
 
+    public static String PROFIL_MIXTE;
+
+    public static String PROFIl_AGENT_SENDER;
+
+    public static String PROFIl_AGENT_PAYER;
+
+    public static String PROFIl_AGENT_MIXTE;
+
     public static String SERVICE_TRANSFER;
 
     public static String CPT_SERVICE_PRINC;
 
     public static String CPT_SERVICE_COMM;
+
+    public static String DEFAULT_GUICHET;
 }

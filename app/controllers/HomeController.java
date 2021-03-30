@@ -66,8 +66,9 @@ public class HomeController extends Controller {
         String session = session(Const.SESSION_CONNECTED);
         if (session == null) session = "false";
         if (!session.equals("true")) {return ok(index.render());}
-        UserSession userSession = new UserSession(session(Const.SESSION_USER_NAME),
-                session(Const.SESSION_PROFIL), session(Const.SESSION_PARTNER_NAME));
+        UserSession userSession = new UserSession(Integer.parseInt(session(Const.SESSION_PARTNER_ID)),
+                session(Const.SESSION_USER_NAME), session(Const.SESSION_PROFIL),
+                session(Const.SESSION_PARTNER_NAME), session(Const.SESSION_CONSUMER_ID));
         return ok(home.render(userSession));
     }
 
@@ -75,8 +76,9 @@ public class HomeController extends Controller {
         String session = session(Const.SESSION_CONNECTED);
         if (session == null) session = "false";
         if (!session.equals("true")) {return ok(index.render());}
-        UserSession userSession = new UserSession(session(Const.SESSION_USER_NAME),
-                session(Const.SESSION_PROFIL), session(Const.SESSION_PARTNER_NAME));
+        UserSession userSession = new UserSession(Integer.parseInt(session(Const.SESSION_PARTNER_ID)),
+                session(Const.SESSION_USER_NAME), session(Const.SESSION_PROFIL),
+                session(Const.SESSION_PARTNER_NAME), session(Const.SESSION_CONSUMER_ID));
         return ok(transactions.render(userSession));
     }
 
@@ -84,8 +86,9 @@ public class HomeController extends Controller {
         String session = session(Const.SESSION_CONNECTED);
         if (session == null) session = "false";
         if (!session.equals("true")) {return ok(index.render());}
-        UserSession userSession = new UserSession(session(Const.SESSION_USER_NAME),
-                session(Const.SESSION_PROFIL), session(Const.SESSION_PARTNER_NAME));
+        UserSession userSession = new UserSession(Integer.parseInt(session(Const.SESSION_PARTNER_ID)),
+                session(Const.SESSION_USER_NAME), session(Const.SESSION_PROFIL),
+                session(Const.SESSION_PARTNER_NAME), session(Const.SESSION_CONSUMER_ID));
         return ok(compenses.render(userSession));
     }
 
@@ -93,17 +96,29 @@ public class HomeController extends Controller {
         String session = session(Const.SESSION_CONNECTED);
         if (session == null) session = "false";
         if (!session.equals("true")) {return ok(index.render());}
-        UserSession userSession = new UserSession(session(Const.SESSION_USER_NAME),
-                session(Const.SESSION_PROFIL), session(Const.SESSION_PARTNER_NAME));
+        UserSession userSession = new UserSession(Integer.parseInt(session(Const.SESSION_PARTNER_ID)),
+                session(Const.SESSION_USER_NAME), session(Const.SESSION_PROFIL),
+                session(Const.SESSION_PARTNER_NAME), session(Const.SESSION_CONSUMER_ID));
         return ok(depots.render(userSession));
+    }
+
+    public Result depotGuichets() {
+        String session = session(Const.SESSION_CONNECTED);
+        if (session == null) session = "false";
+        if (!session.equals("true")) {return ok(index.render());}
+        UserSession userSession = new UserSession(Integer.parseInt(session(Const.SESSION_PARTNER_ID)),
+                session(Const.SESSION_USER_NAME), session(Const.SESSION_PROFIL),
+                session(Const.SESSION_PARTNER_NAME), session(Const.SESSION_CONSUMER_ID));
+        return ok(depotGuichets.render(userSession));
     }
 
     public Result partners() {
         String session = session(Const.SESSION_CONNECTED);
         if (session == null) session = "false";
         if (!session.equals("true")) {return ok(index.render());}
-        UserSession userSession = new UserSession(session(Const.SESSION_USER_NAME),
-                session(Const.SESSION_PROFIL), session(Const.SESSION_PARTNER_NAME));
+        UserSession userSession = new UserSession(Integer.parseInt(session(Const.SESSION_PARTNER_ID)),
+                session(Const.SESSION_USER_NAME), session(Const.SESSION_PROFIL),
+                session(Const.SESSION_PARTNER_NAME), session(Const.SESSION_CONSUMER_ID));
         return ok(partners.render(userSession));
     }
 
@@ -111,9 +126,20 @@ public class HomeController extends Controller {
         String session = session(Const.SESSION_CONNECTED);
         if (session == null) session = "false";
         if (!session.equals("true")) {return ok(index.render());}
-        UserSession userSession = new UserSession(session(Const.SESSION_USER_NAME),
-                session(Const.SESSION_PROFIL), session(Const.SESSION_PARTNER_NAME));
+        UserSession userSession = new UserSession(Integer.parseInt(session(Const.SESSION_PARTNER_ID)),
+                session(Const.SESSION_USER_NAME), session(Const.SESSION_PROFIL),
+                session(Const.SESSION_PARTNER_NAME), session(Const.SESSION_CONSUMER_ID));
         return ok(users.render(userSession));
+    }
+
+    public Result guichets() {
+        String session = session(Const.SESSION_CONNECTED);
+        if (session == null) session = "false";
+        if (!session.equals("true")) {return ok(index.render());}
+        UserSession userSession = new UserSession(Integer.parseInt(session(Const.SESSION_PARTNER_ID)),
+                session(Const.SESSION_USER_NAME), session(Const.SESSION_PROFIL),
+                session(Const.SESSION_PARTNER_NAME), session(Const.SESSION_CONSUMER_ID));
+        return ok(guichets.render(userSession));
     }
 
     // Methode contenant les URL Ajax pour ce controller
@@ -129,6 +155,7 @@ public class HomeController extends Controller {
                 routes.javascript.Enquiries.getTransactions(),
                 routes.javascript.Enquiries.getCompenses(),
                 routes.javascript.Enquiries.getDepots(),
+                routes.javascript.Enquiries.getDepotGuichets(),
                 routes.javascript.Operations.checkFees(),
                 routes.javascript.Operations.sendTransfer(),
                 routes.javascript.Operations.payTransfer(),
@@ -136,12 +163,18 @@ public class HomeController extends Controller {
                 routes.javascript.PartnerManager.getPartners(),
                 routes.javascript.PartnerManager.addPartner(),
                 routes.javascript.PartnerManager.depotSender(),
-                routes.javascript.UserController.getUsers(),
-                routes.javascript.UserController.addUser(),
-                routes.javascript.UserController.updateUser(),
-                routes.javascript.UserController.changePassword(),
-                routes.javascript.UserController.reinitPassword(),
-                routes.javascript.UserController.lockOrUnlockUser()
+                routes.javascript.UserManager.getUsers(),
+                routes.javascript.UserManager.addUser(),
+                routes.javascript.UserManager.updateUser(),
+                routes.javascript.UserManager.changePassword(),
+                routes.javascript.UserManager.reinitPassword(),
+                routes.javascript.UserManager.lockOrUnlockUser(),
+                routes.javascript.UserManager.openGuichet(),
+                routes.javascript.UserManager.updateTransaction(),
+                routes.javascript.GuichetManager.getGuichets(),
+                routes.javascript.GuichetManager.addGuichet(),
+                routes.javascript.GuichetManager.verrouGuichet(),
+                routes.javascript.GuichetManager.depotGuichet()
         ));
     }
 

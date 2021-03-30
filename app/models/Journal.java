@@ -90,6 +90,7 @@ public class Journal {
 
         String profilAdminSender = Play.application().configuration().getString("profil.sender");
         String profilAdminPayer = Play.application().configuration().getString("profil.payer");
+        String profilAdminMixte = Play.application().configuration().getString("profil.mixte");
         String profilAdmin = Play.application().configuration().getString("profil.admin");
 
         StringBuilder req = new StringBuilder(
@@ -112,14 +113,14 @@ public class Journal {
         }
 
         if(fin.isEmpty() && debut.isEmpty()){
-            if (profil.equals(profilAdminSender) || profil.equals(profilAdminPayer)){
+            if (profil.equals(profilAdminSender) || profil.equals(profilAdminPayer) || profil.equals(profilAdminMixte)){
                 req.append(" WHERE " + JOURNAL.COMPTE + " IN ('" + comptePrinc + "', '" + compteComm + "', '" + compteCharge + "')");
             }else if (profil.equals(profilAdmin)){
                 req.append(" WHERE " + JOURNAL.COMPTE + " NOT LIKE '" + Const.CPT_SERVICE_PRINC +   "%'");
                 req.append(" AND " + JOURNAL.COMPTE + " NOT LIKE '" + Const.CPT_SERVICE_COMM +   "%'");
             }
         }else{
-            if (profil.equals(profilAdminSender) || profil.equals(profilAdminPayer)){
+            if (profil.equals(profilAdminSender) || profil.equals(profilAdminPayer) || profil.equals(profilAdminMixte)){
                 req.append(" AND " + JOURNAL.COMPTE + " IN ('" + comptePrinc + "', '" + compteComm + "', '" + compteCharge + "')");
             }
             else if (profil.equals(profilAdmin)){

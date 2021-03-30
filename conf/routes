@@ -11,8 +11,10 @@ GET     /home                       controllers.HomeController.home
 GET     /transactions               controllers.HomeController.transactions
 GET     /compenses                  controllers.HomeController.compenses
 GET     /depots                     controllers.HomeController.depots
+GET     /depots/guichets            controllers.HomeController.depotGuichets
 GET     /partners                   controllers.HomeController.partners
-GET     /partners/users             controllers.HomeController.users
+GET     /users                      controllers.HomeController.users
+GET     /guichets                   controllers.HomeController.guichets
 
 #LANG
 GET    /changeLang                  controllers.HomeController.changeLangue(lang: String)
@@ -39,20 +41,29 @@ GET       /com/transfer/client/operations                   controllers.Enquirie
 GET       /com/transfer/client/transactions                 controllers.Enquiries.getTransactions(debut: String ?="", fin: String ?="", partner: String ?="", page: Int?=1, per_page: Int?=10)
 GET       /com/transfer/client/compenses                    controllers.Enquiries.getCompenses(debut: String ?="", fin: String ?="", page: Int?=1, per_page: Int?=10)
 GET       /com/transfer/client/depots                       controllers.Enquiries.getDepots(debut: String ?="", fin: String ?="", page: Int?=1, per_page: Int?=10)
+GET       /com/transfer/client/depots/guichets              controllers.Enquiries.getDepotGuichets(debut: String ?="", fin: String ?="", page: Int?=1, per_page: Int?=10)
 
 #PARTNER MANAGER
-GET       /com/transfer/partner/list                        controllers.PartnerManager.getPartners(name: String ?="", page: Int?=1, per_page: Int?=10)
+GET       /com/transfer/partner/list                        controllers.PartnerManager.getPartners(name: String ?="", page: Int?=1, per_page: Int?=20)
 POST      /com/transfer/partner/add                         controllers.PartnerManager.addPartner()
 POST      /com/transfer/partner/depot                       controllers.PartnerManager.depotSender()
 
 
 #USER MANAGER
-GET       /com/transfer/partner/user/get                    controllers.UserController.getUsers(partner: Int)
-POST      /com/transfer/partner/user/add                    controllers.UserController.addUser()
-POST      /com/transfer/partner/user/update                 controllers.UserController.updateUser()
-POST      /com/transfer/partner/user/changePassword         controllers.UserController.changePassword()
-POST      /com/transfer/partner/user/reinitPass             controllers.UserController.reinitPassword()
-POST      /com/transfer/partner/user/lock                   controllers.UserController.lockOrUnlockUser()
+GET       /com/transfer/partner/user/get                    controllers.UserManager.getUsers(partner: Int)
+POST      /com/transfer/partner/user/add                    controllers.UserManager.addUser()
+POST      /com/transfer/partner/user/update                 controllers.UserManager.updateUser()
+POST      /com/transfer/partner/user/changePassword         controllers.UserManager.changePassword()
+POST      /com/transfer/partner/user/reinitPass             controllers.UserManager.reinitPassword()
+POST      /com/transfer/partner/user/lock                   controllers.UserManager.lockOrUnlockUser()
+POST      /com/transfer/partner/user/open/guichet           controllers.UserManager.openGuichet()
+POST      /com/transfer/partner/user/update/transaction     controllers.UserManager.updateTransaction()
+
+#GUICHET MANAGER
+GET       /com/transfer/partner/guichet/get                 controllers.GuichetManager.getGuichets(partner: String)
+POST      /com/transfer/partner/guichet/add                 controllers.GuichetManager.addGuichet()
+POST      /com/transfer/partner/guichet/lock                controllers.GuichetManager.verrouGuichet()
+POST      /com/transfer/partner/guichet/depot               controllers.GuichetManager.depotGuichet()
 
 
 # Map static resources from the /public folder to the /assets URL path

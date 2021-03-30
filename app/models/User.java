@@ -126,7 +126,7 @@ public class User {
         try {
             connection = DB.getConnection();
             req = "update user as u SET " + Column.PASSWORD + " = ? "
-                    + "where " + Column.ID_PROFIL + " = ? AND " + Column.PASSWORD + " = ? ";
+                    + "where " + Column.ID_USER + " = ? AND " + Column.PASSWORD + " = ? ";
 
             preparedStatement = connection.prepareStatement(req);
             preparedStatement.setObject(1, Utils.getMD5(mdp));
@@ -236,10 +236,10 @@ public class User {
     }
 
     public static ProcedureResult updateUser(String nom, String prenom, String telephone,
-                                          String email, int profil, int user) {
+                                          String email, int user) {
         Connection connection = null;
         CallableStatement callableStatement = null;
-        String req = "{ call ps_update_user(?,?,?,?,?,?,?,?)}";
+        String req = "{ call ps_update_user(?,?,?,?,?,?,?)}";
         try {
             connection = DB.getConnection();
             callableStatement = connection.prepareCall(req);
@@ -249,8 +249,7 @@ public class User {
             callableStatement.setString(4, prenom);
             callableStatement.setString(5, telephone);
             callableStatement.setString(6, email);
-            callableStatement.setInt(7, profil);
-            callableStatement.setInt(8, user);
+            callableStatement.setInt(7, user);
             callableStatement.execute();
             int value = callableStatement.getInt(1);
             String message = callableStatement.getString(2);

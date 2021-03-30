@@ -2,10 +2,8 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.Country;
-import models.ProcedureResult;
-import models.Profil;
-import models.User;
+import models.*;
+import play.Logger;
 import play.i18n.Messages;
 import play.libs.F;
 import play.libs.Json;
@@ -25,7 +23,7 @@ import static tools.Const.SESSION_PROFIL;
 /**
  * Created by bosco on 09/08/2019.
  */
-public class UserController extends Controller {
+public class UserManager extends Controller {
 
     public F.Promise<Result> getUsers(int partner) {
         return promise(() -> {
@@ -40,7 +38,10 @@ public class UserController extends Controller {
             Log.logActionHeader(user, "getUsers");
             Log.logActionInput(request().queryString());
 
-            if (!Const.PROFIL_ADMIN.equals(session(SESSION_PROFIL)) ) {
+            if (!Const.PROFIL_ADMIN.equals(session(SESSION_PROFIL)) &&
+                    !Const.PROFIL_SENDER.equals(session(SESSION_PROFIL)) &&
+                    !Const.PROFIL_PAYER.equals(session(SESSION_PROFIL))  &&
+                    !Const.PROFIL_MIXTE.equals(session(SESSION_PROFIL)) ) {
                 node.put("result", "nok");
                 node.put("message", Messages.get("error.bad.profil"));
                 Log.logActionOutput(node.toString());
@@ -54,12 +55,12 @@ public class UserController extends Controller {
                 node.put("code", 200);
                 node.put("name", DBUtils.getPartnerName(partner));
                 node.put("users", Json.toJson(list));
-                node.put("profils", Json.toJson(Profil.getProfils()));
+                //node.put("profils", Json.toJson(Profil.getProfils()));
             } else {
                 node.put("code", 201);
                 node.put("name", DBUtils.getPartnerName(partner));
                 node.put("message", Messages.get("label.message.empty.user"));
-                node.put("profils", Json.toJson(Profil.getProfils()));
+                //node.put("profils", Json.toJson(Profil.getProfils()));
             }
 
             Log.logActionOutput(node.toString());
@@ -83,7 +84,10 @@ public class UserController extends Controller {
             Log.logActionHeader(user, "addUser");
             Log.logActionInputJson(request().body().asJson().toString());
 
-            if (!Const.PROFIL_ADMIN.equals(session(SESSION_PROFIL)) ) {
+            if (!Const.PROFIL_ADMIN.equals(session(SESSION_PROFIL)) &&
+                !Const.PROFIL_SENDER.equals(session(SESSION_PROFIL)) &&
+                !Const.PROFIL_PAYER.equals(session(SESSION_PROFIL))  &&
+                !Const.PROFIL_MIXTE.equals(session(SESSION_PROFIL)) ) {
                 node.put("result", "nok");
                 node.put("message", Messages.get("error.bad.profil"));
                 Log.logActionOutput(node.toString());
@@ -98,18 +102,18 @@ public class UserController extends Controller {
             String email = json.findPath("email").textValue();
             String login = json.findPath("login").textValue();
             String pass = Utils.generateUserPassword();
-            String profil = json.findPath("profil").textValue();
+            //String profil = json.findPath("profil").textValue();
             String partner = json.findPath("partner").textValue();
 
-            if (!Utils.checkData(nom, prenom, telephone, email, login, pass, profil, partner)) {
+            if (!Utils.checkData(nom, prenom, telephone, email, login, pass, partner)) {
                 node.put("code", 201);
                 node.put("message", Messages.get("error.parameter"));
                 node.put("countries", Json.toJson(Country.getCountries()));
                 Log.logActionOutput(node.toString());
                 return ok(node);
             }
-            ProcedureResult result = User.addUser(nom, prenom, telephone, email, login, pass,
-                                Integer.parseInt(profil), Integer.parseInt(partner));
+            ProcedureResult result = User.addUser(nom.toUpperCase(), prenom.toUpperCase(), telephone, email, login, pass,
+                                Utils.getProfilAgent(session(Const.SESSION_PARTNER_TYPE)), Integer.parseInt(partner));
 
             if (result.getResult() == 0) {
                 node.put("code", 201);
@@ -118,7 +122,7 @@ public class UserController extends Controller {
             } else {
                 node.put("code", 200);
                 node.put("message", result.getMessage());
-                String message = Messages.get("message.hi") + " " + prenom + " " + nom + ", " +
+                String message = Messages.get("message.hi") + " " + prenom .toUpperCase() + " " + nom.toUpperCase() + ", " +
                         Messages.get("message.create.user") + " ; " +
                         Messages.get("message.create.user.login")  + " : " + login + ", " +
                         Messages.get("message.create.user.pass")  + " : " + pass + " . " ;
@@ -146,7 +150,10 @@ public class UserController extends Controller {
             Log.logActionHeader(user, "updateUser");
             Log.logActionInputJson(request().body().asJson().toString());
 
-            if (!Const.PROFIL_ADMIN.equals(session(SESSION_PROFIL)) ) {
+            if (!Const.PROFIL_ADMIN.equals(session(SESSION_PROFIL)) &&
+                    !Const.PROFIL_SENDER.equals(session(SESSION_PROFIL)) &&
+                    !Const.PROFIL_PAYER.equals(session(SESSION_PROFIL))  &&
+                    !Const.PROFIL_MIXTE.equals(session(SESSION_PROFIL)) ) {
                 node.put("result", "nok");
                 node.put("message", Messages.get("error.bad.profil"));
                 Log.logActionOutput(node.toString());
@@ -159,18 +166,17 @@ public class UserController extends Controller {
             String prenom = json.findPath("prenom").textValue();
             String telephone = json.findPath("telephone").textValue();
             String email = json.findPath("email").textValue();
-            String profil = json.findPath("profil").textValue();
+            //String profil = json.findPath("profil").textValue();
             String idUser = json.findPath("user").textValue();
 
-            if (!Utils.checkData(nom, prenom, telephone, email, profil, idUser)) {
+            if (!Utils.checkData(nom, prenom, telephone, email, idUser)) {
                 node.put("code", 201);
                 node.put("message", Messages.get("error.parameter"));
                 Log.logActionOutput(node.toString());
                 return ok(node);
             }
 
-            ProcedureResult result = User.updateUser(nom, prenom, telephone, email,
-                                        Integer.parseInt(profil), Integer.parseInt(idUser));
+            ProcedureResult result = User.updateUser(nom, prenom, telephone, email, Integer.parseInt(idUser));
 
             if (result.getResult() == 0) {
                 node.put("code", 201);
@@ -248,7 +254,10 @@ public class UserController extends Controller {
             Log.logActionHeader(user, "reinitPassword");
             Log.logActionInputJson(request().body().asJson().toString());
 
-            if (!Const.PROFIL_ADMIN.equals(session(SESSION_PROFIL)) ) {
+            if (!Const.PROFIL_ADMIN.equals(session(SESSION_PROFIL)) &&
+                    !Const.PROFIL_SENDER.equals(session(SESSION_PROFIL)) &&
+                    !Const.PROFIL_PAYER.equals(session(SESSION_PROFIL))  &&
+                    !Const.PROFIL_MIXTE.equals(session(SESSION_PROFIL)) ) {
                 node.put("result", "nok");
                 node.put("message", Messages.get("error.bad.profil"));
                 Log.logActionOutput(node.toString());
@@ -307,7 +316,10 @@ public class UserController extends Controller {
             Log.logActionHeader(user, "lockOrUnlockUser");
             Log.logActionInputJson(request().body().asJson().toString());
 
-            if (!Const.PROFIL_ADMIN.equals(session(SESSION_PROFIL)) ) {
+            if (!Const.PROFIL_ADMIN.equals(session(SESSION_PROFIL)) &&
+                    !Const.PROFIL_SENDER.equals(session(SESSION_PROFIL)) &&
+                    !Const.PROFIL_PAYER.equals(session(SESSION_PROFIL))  &&
+                    !Const.PROFIL_MIXTE.equals(session(SESSION_PROFIL)) ) {
                 node.put("result", "nok");
                 node.put("message", Messages.get("error.bad.profil"));
                 Log.logActionOutput(node.toString());
@@ -340,4 +352,115 @@ public class UserController extends Controller {
             }
         });
     }
+
+    public F.Promise<Result> openGuichet() {
+        return promise(() -> {
+            ObjectNode node = Json.newObject();
+            String session = session(SESSION_CONNECTED);
+            if (session == null) {
+                node.put("result", "nok");
+                node.put("message", Messages.get("error.session"));
+                Log.logActionOutput(node.toString());
+                return unauthorized(node);
+            }
+
+            String user = session(Const.SESSION_USER_NAME);
+            Log.logActionHeader(user, "openGuichet");
+            Log.logActionInputJson(request().body().asJson().toString());
+
+            //Logger.info("SESSION_GUICHET BEGIN OPEN: " + session(Const.SESSION_GUICHET));
+
+            if (!Const.PROFIL_SENDER.equals(session(SESSION_PROFIL)) &&
+                    !Const.PROFIL_SENDER.equals(session(SESSION_PROFIL)) &&
+                    !Const.PROFIL_MIXTE.equals(session(SESSION_PROFIL))) {
+                node.put("result", "nok");
+                node.put("message", Messages.get("error.bad.profil"));
+                Log.logActionOutput(node.toString());
+                return unauthorized(node);
+            }
+
+            JsonNode json = request().body().asJson();
+
+            String device = session(Const.SESSION_DEVICE_ID);
+            String guichet = json.findPath("guichet").textValue();
+            String idUser = session(Const.SESSION_USER_ID);
+
+            if (!Utils.checkData(device, guichet, idUser)) {
+                node.put("code", 201);
+                node.put("message", Messages.get("error.parameter"));
+                Log.logActionOutput(node.toString());
+                return ok(node);
+            }
+            ProcedureResult result = Guichet.openGuichet(device, guichet, Integer.parseInt(idUser));
+
+            if (result.getResult() == 0) {
+                node.put("code", 201);
+                node.put("message", result.getMessage());
+                return ok(node);
+            } else {
+                node.put("code", 200);
+                node.put("message", result.getMessage());
+                session(Const.SESSION_GUICHET, guichet);
+                Logger.info("SESSION_GUICHET OPEN: " + session(Const.SESSION_GUICHET));
+            }
+            Log.logActionOutput(node.toString());
+            return ok(node);
+
+        });
+    }
+
+    public F.Promise<Result> updateTransaction() {
+        return promise(() -> {
+            ObjectNode node = Json.newObject();
+            String session = session(SESSION_CONNECTED);
+            if (session == null) {
+                node.put("result", "nok");
+                node.put("message", Messages.get("error.session"));
+                Log.logActionOutput(node.toString());
+                return unauthorized(node);
+            }
+
+            String user = session(Const.SESSION_USER_NAME);
+            Log.logActionHeader(user, "updateTransaction");
+            Log.logActionInputJson(request().body().asJson().toString());
+
+            if (!Const.PROFIL_SENDER.equals(session(SESSION_PROFIL)) &&
+                    !Const.PROFIL_SENDER.equals(session(SESSION_PROFIL)) &&
+                    !Const.PROFIL_MIXTE.equals(session(SESSION_PROFIL))) {
+                node.put("result", "nok");
+                node.put("message", Messages.get("error.bad.profil"));
+                Log.logActionOutput(node.toString());
+                return unauthorized(node);
+            }
+
+            JsonNode json = request().body().asJson();
+
+            String transaction = json.findPath("transaction").textValue();
+            String transmetter = json.findPath("transmetter").textValue();
+            String transmetterTel = json.findPath("transmetterTel").textValue();
+            String beneficiaire = json.findPath("beneficiaire").textValue();
+            String beneficiaireTel = json.findPath("beneficiaireTel").textValue();
+
+            if (!Utils.checkData(transaction, transmetter, transmetterTel, beneficiaire, beneficiaireTel)) {
+                node.put("code", 201);
+                node.put("message", Messages.get("error.parameter"));
+                Log.logActionOutput(node.toString());
+                return ok(node);
+            }
+            ProcedureResult result = Transaction.updateTransaction(transaction, transmetter, transmetterTel, beneficiaire, beneficiaireTel);
+
+            if (result.getResult() == 0) {
+                node.put("code", 201);
+                node.put("message", result.getMessage());
+                return ok(node);
+            } else {
+                node.put("code", 200);
+                node.put("message", result.getMessage());
+            }
+            Log.logActionOutput(node.toString());
+            return ok(node);
+
+        });
+    }
+
 }

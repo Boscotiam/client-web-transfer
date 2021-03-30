@@ -28,4 +28,5 @@ public class AddPartnerResult extends ProcedureResult {
     public void setCompteCharge(String compteCharge) {
         this.compteCharge = compteCharge;
     }
+
 }

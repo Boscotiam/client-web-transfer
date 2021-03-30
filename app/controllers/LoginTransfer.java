@@ -50,6 +50,7 @@ public class LoginTransfer extends Controller {
 
             json.put("login", login);
             json.put("password", password);
+            json.put("guichet", Const.DEFAULT_GUICHET);
             json.put("os", Const.OS);
             json.put("version", Const.VERSION);
             json.put("deviceId", session(Const.SESSION_DEVICE_ID));
@@ -195,6 +196,7 @@ public class LoginTransfer extends Controller {
 
                 session(Const.SESSION_CONNECTED, "true");
 
+                session(Const.SESSION_PARTNER_ID, String.valueOf(Partner.getIdParter(session(Const.SESSION_CONSUMER_ID))));
                 session(Const.SESSION_PARTNER_NAME, partnerResponse.getPartner().getName());
                 session(Const.SESSION_PARTNER_TYPE, partnerResponse.getPartner().getType());
                 session(Const.SESSION_PARTNER_ADRESS, partnerResponse.getPartner().getAdress());

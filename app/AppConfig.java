@@ -26,9 +26,23 @@ public class AppConfig {
 
         Const.HTTP_SUCCESS = conf.getInt("http.success");
 
+        Const.PROFIL_ADMIN_ID = conf.getInt("profil.id.admin");
+        Const.PROFIL_SENDER_ID = conf.getInt("profil.id.sender");
+        Const.PROFIL_PAYER_ID = conf.getInt("profil.id.payer");
+        Const.PROFIL_MIXTE_ID = conf.getInt("profil.id.mixte");
+        Const.PROFIL_AGENT_SENDER_ID = conf.getInt("profil.id.agent.sender");
+        Const.PROFIL_AGENT_PAYER_ID = conf.getInt("profil.id.agent.payer");
+        Const.PROFIL_AGENT_MIXTE_ID = conf.getInt("profil.id.agent.mixte");
+
+        Const.DEFAULT_GUICHET = conf.getString("default.guichet");
+
         Const.PROFIL_ADMIN = conf.getString("profil.admin");
         Const.PROFIL_SENDER = conf.getString("profil.sender");
         Const.PROFIL_PAYER = conf.getString("profil.payer");
+        Const.PROFIL_MIXTE = conf.getString("profil.mixte");
+        Const.PROFIl_AGENT_SENDER = conf.getString("profil.agent.sender");
+        Const.PROFIl_AGENT_PAYER = conf.getString("profil.agent.payer");
+        Const.PROFIl_AGENT_MIXTE = conf.getString("profil.agent.mixte");
 
         Const.SERVICE_TRANSFER = conf.getString("service.transfer");
         Const.CPT_SERVICE_PRINC = conf.getString("cpt.service.princ");

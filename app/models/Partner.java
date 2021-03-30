@@ -7,6 +7,7 @@ import play.libs.Json;
 import tools.DBUtils;
 
 import java.sql.*;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 /**
@@ -386,11 +387,27 @@ public class Partner {
         }
     }
 
-    /*DELIMITER ;;
-    CREATE DEFINER=`root`@`localhost` PROCEDURE `ps_depot_execute`(
-    OUT resultat INT, OUT message VARCHAR(100), OUT VARCODETRANSACTION VARCHAR(30),
-    OUT VARCOMMISSION DOUBLE, OUT VARSOLDECHARGEFIN DOUBLE,
-    IN VARPARTNER VARCHAR(250), IN VARAMOUNT DOUBLE, IN VARUSER INT)*/
+
+    public static int getIdParter(String counsumeId) {
+        Connection connection = DB.getConnection();
+        CallableStatement cStmt = null;
+        String req = "{? = call f_get_id_partner(?)}";
+        Logger.info("Req: " + req);
+        try {
+
+            cStmt = connection.prepareCall(req);
+            cStmt.registerOutParameter(1, Types.VARCHAR);
+            cStmt.setString(2, counsumeId);
+            cStmt.execute();
+            return cStmt.getInt(1);
+
+        } catch (SQLException e) {
+            return 0;
+        } finally {
+            DBUtils.closeQuietly(connection, cStmt, null);
+        }
+    }
+
 
     public static DepotResult depotExecute(String consumerId, double montant, int user) {
         java.sql.Connection connection = null;

@@ -17,11 +17,11 @@ import java.util.ArrayList;
 /**
  * Created by bosco on 31/01/2021.
  */
-public class Depot {
+public class DepotGuichet {
 
-    private String reference, partner, compte, montant, date, etat;
+    private String reference, codeGuichet, guichet, compte, montant, date, etat;
 
-    public Depot() {
+    public DepotGuichet() {
     }
 
     public String getDate() {
@@ -38,6 +38,14 @@ public class Depot {
 
     public void setReference(String reference) {
         this.reference = reference;
+    }
+
+    public String getCodeGuichet() {
+        return codeGuichet;
+    }
+
+    public void setCodeGuichet(String codeGuichet) {
+        this.codeGuichet = codeGuichet;
     }
 
     public String getCompte() {
@@ -64,18 +72,18 @@ public class Depot {
         this.etat = etat;
     }
 
-    public String getPartner() {
-        return partner;
+    public String getGuichet() {
+        return guichet;
     }
 
-    public void setPartner(String partner) {
-        this.partner = partner;
+    public void setGuichet(String guichet) {
+        this.guichet = guichet;
     }
 
     public ObjectNode toObjectNode(){
         ObjectNode node = Json.newObject();
         node.put("reference", reference);
-        node.put("partner", partner);
+        node.put("guichet", guichet);
         node.put("compte", compte);
         node.put("montant", montant);
         node.put("date", date);
@@ -87,54 +95,55 @@ public class Depot {
         return toObjectNode().toString();
     }
 
-    public static StringBuilder requestDepot(String debut, String fin, String profil, String projection){
+    public static StringBuilder requestDepotGuichet(String debut, String fin, String profil, String projection){
 
         String profilAdminSender = Play.application().configuration().getString("profil.sender");
         String profilAdminMixte = Play.application().configuration().getString("profil.mixte");
 
         StringBuilder req = new StringBuilder(
                 "SELECT " + projection + " " +
-                        "FROM " + DEPOT.TABLE + " "
+                        "FROM " + DEPOTGUICHET.TABLE + " "
         );
 
         String consumerId = play.mvc.Controller.ctx().session().get(Const.SESSION_CONSUMER_ID);
 
         if(!debut.isEmpty()){
-            req.append("WHERE " + Depot.DEPOT.DATE + " >= '" + debut + "' ");
+            req.append("WHERE " + DepotGuichet.DEPOTGUICHET.DATE + " >= '" + debut + "' ");
         }
         if(!fin.isEmpty() && debut.isEmpty()){
-            req.append("WHERE " + Depot.DEPOT.DATE + " <= '" + fin + "' ");
+            req.append("WHERE " + DepotGuichet.DEPOTGUICHET.DATE + " <= '" + fin + "' ");
         }
         if(!fin.isEmpty() && !debut.isEmpty()){
-            req.append("AND " + Depot.DEPOT.DATE + " <= '" + fin + "' ");
+            req.append("AND " + DepotGuichet.DEPOTGUICHET.DATE + " <= '" + fin + "' ");
         }
 
         if(fin.isEmpty() && debut.isEmpty()){
             if (profil.equals(profilAdminSender)){
-                req.append("WHERE " + Depot.DEPOT.CONSUMER_ID + " = '" + consumerId +  "' ");
+                req.append("WHERE " + DepotGuichet.DEPOTGUICHET.CONSUMER_ID + " = '" + consumerId +  "' ");
             }
             if (profil.equals(profilAdminMixte)){
-                req.append("WHERE " + Depot.DEPOT.CONSUMER_ID + " = '" + consumerId +  "' ");
+                req.append("WHERE " + DepotGuichet.DEPOTGUICHET.CONSUMER_ID + " = '" + consumerId +  "' ");
             }
         }else{
             if (profil.equals(profilAdminSender)){
-                req.append("AND " + Depot.DEPOT.CONSUMER_ID + " = '" + consumerId +  "' ");
+                req.append("AND " + DepotGuichet.DEPOTGUICHET.CONSUMER_ID + " = '" + consumerId +  "' ");
             }
             if (profil.equals(profilAdminMixte)){
-                req.append("AND " + Depot.DEPOT.CONSUMER_ID + " = '" + consumerId +  "' ");
+                req.append("AND " + DepotGuichet.DEPOTGUICHET.CONSUMER_ID + " = '" + consumerId +  "' ");
             }
         }
 
-        req.append(" ORDER BY " + Depot.DEPOT.DATE + " DESC ");
+        req.append(" ORDER BY " + DepotGuichet.DEPOTGUICHET.DATE + " DESC ");
         return req;
     }
 
-    public static ArrayList<Depot> getDepots(String debut, String fin, String profil,
-                                                   int page, int perPage, boolean all) {
-        String projection = DEPOT.TRANSACTION + ", " + DEPOT.PARTNER + ", " + DEPOT.ACCOUNT + ", " +
-                DEPOT.MONTANT + ", " + DEPOT.DATE + ", " + DEPOT.ETAT;
+    public static ArrayList<DepotGuichet> getDepotGuichets(String debut, String fin, String profil,
+                                             int page, int perPage, boolean all) {
+        String projection = DEPOTGUICHET.TRANSACTION + ", " + DEPOTGUICHET.CODE_GUICHET + ", " +
+                DEPOTGUICHET.GUICHET + ", " + DEPOTGUICHET.ACCOUNT + ", " +
+                DEPOTGUICHET.MONTANT + ", " + DEPOTGUICHET.DATE + ", " + DEPOTGUICHET.ETAT;
 
-        StringBuilder req = requestDepot(debut, fin, profil, projection);
+        StringBuilder req = requestDepotGuichet(debut, fin, profil, projection);
 
         if (!all) {
             if (page == 1) {
@@ -149,7 +158,7 @@ public class Depot {
 
         Logger.info(req.toString());
 
-        ArrayList<Depot> compenses = new ArrayList<>();
+        ArrayList<DepotGuichet> compenses = new ArrayList<>();
         java.sql.Connection connection = null;
         Statement ps = null;
         ResultSet res = null;
@@ -163,7 +172,7 @@ public class Depot {
             }
 
             while (res.next()) {
-                compenses.add(getDepotObject(res));
+                compenses.add(getDepotGuichetObject(res));
             }
         } catch (SQLException e) {
             Logger.error(e.getMessage());
@@ -174,23 +183,24 @@ public class Depot {
         return compenses;
     }
 
-    private static Depot getDepotObject(ResultSet r) throws SQLException {
+    private static DepotGuichet getDepotGuichetObject(ResultSet r) throws SQLException {
 
-        Depot depot = new Depot();
+        DepotGuichet depot = new DepotGuichet();
 
-        depot.setReference(r.getString(DEPOT.TRANSACTION));
-        depot.setPartner(r.getString(DEPOT.PARTNER));
-        depot.setCompte(r.getString(DEPOT.ACCOUNT));
-        depot.setMontant(Utils.formatAmount(r.getDouble(DEPOT.MONTANT)));
-        depot.setDate(r.getString(DEPOT.DATE));
-        depot.setEtat(r.getString(DEPOT.ETAT));
+        depot.setReference(r.getString(DEPOTGUICHET.TRANSACTION));
+        depot.setCodeGuichet(r.getString(DEPOTGUICHET.CODE_GUICHET));
+        depot.setGuichet(r.getString(DEPOTGUICHET.GUICHET));
+        depot.setCompte(r.getString(DEPOTGUICHET.ACCOUNT));
+        depot.setMontant(Utils.formatAmount(r.getDouble(DEPOTGUICHET.MONTANT)));
+        depot.setDate(r.getString(DEPOTGUICHET.DATE));
+        depot.setEtat(r.getString(DEPOTGUICHET.ETAT));
 
         return depot;
     }
 
-    public class DEPOT{
+    public class DEPOTGUICHET{
 
-        public static final String TABLE = "depotsender";
+        public static final String TABLE = "depotguichet";
 
         public static final String TRANSACTION = "codetransaction";
 
@@ -198,13 +208,15 @@ public class Depot {
 
         public static final String CONSUMER_ID = "consumerid";
 
-        public static final String PARTNER = "f_get_partner_by_consumer_id(consumerid)";
+        public static final String CODE_GUICHET = "guichet";
+
+        public static final String GUICHET = "f_get_guichet_by_code(guichet)";
 
         public static final String MONTANT = "montant";
 
         public static final String DATE = "dateoperation";
 
         public static final String ETAT = "etat";
-        
+
     }
 }

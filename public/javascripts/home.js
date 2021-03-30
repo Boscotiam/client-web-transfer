@@ -14,6 +14,7 @@ $(document)
         var transferResponse;
         var infosResponse;
         var feesResponse;
+        var openResponse;
 
         getSession();
 
@@ -65,6 +66,18 @@ $(document)
                         $('#principalBalance').append(principalBalance);
                         $('#feesBalance').append(feesBalance);
                         $('#chargeBalance').append(chargeBalance);
+
+                        var countries = json.countries;
+                        $('#destination').html('');
+                        $('#destinationFees').html('');
+                        var htmlEnteteProfil = '<option value="">' + labelCountry + '</option>';
+                        $('#destination').append(htmlEnteteProfil);
+                        $('#destinationFees').append(htmlEnteteProfil);
+                        for (var i in countries) {
+                                var html = '<option value="' + countries[i].code + '">' + countries[i].libelle + '</option>';
+                                $('#destination').append(html);
+                                $('#destinationFees').append(html);
+                        }
 
 
                         var operations = json.operations;
@@ -149,6 +162,7 @@ $(document)
         function doVerifySendTransfer(){
             var montant = $('#montant').val();
             var transmetter = $('#transmetter').val();
+            var transmetterTel = $('#transmetterTel').val();
             var transmetterIdentify = $('#transmetterIdentify').val();
             var beneficiary = $('#beneficiary').val();
             var mobile = $('#mobile').val();
@@ -159,6 +173,9 @@ $(document)
             else if(transmetter == ''){
                 doShowErrorAdd(labelVerifyTransmetter);
             }
+            else if(transmetterTel == ''){
+                doShowErrorAdd(labelVerifyTransmetterTel);
+            }
             else if(transmetterIdentify == ''){
                 doShowErrorAdd(labelVerifyTransmetterId);
             }
@@ -168,10 +185,14 @@ $(document)
             else if(mobile == ''){
                 doShowErrorAdd(labelVerifyMobile);
             }
+            else if(destination == ''){
+                doShowErrorAdd(labelVerifyCountry);
+            }
             else{
                 var data = {
                       'montant' : montant,
                       'transmetter' : transmetter,
+                      'transmetterTel' : transmetterTel,
                       'transmetterIdentify' : transmetterIdentify,
                       'beneficiary' : beneficiary,
                       'mobile' : mobile,
@@ -212,6 +233,55 @@ $(document)
             });
         }
 
+        $('#btnOpenGuichet').click(
+            function(e) {
+                doVerifyOpenguichet();
+        });
+
+        function doVerifyOpenguichet(){
+            var guichet = $('#guichet').val();
+            if(guichet == ''){
+                doShowErrorOpen(labelVerifyGuichet);
+            }
+            else{
+                var data = {
+                      "guichet" : guichet
+                };
+                doOpenguichet(data);
+            }
+        }
+
+        function doOpenguichet(data){
+            $('#btnOpenGuichet').attr("disabled", true);
+            $(".loader").fadeIn("1000");
+            appRoutes.controllers.UserManager.openGuichet().ajax({
+                data : JSON.stringify(data),
+                contentType : 'application/json',
+                success : function (json) {
+                    if(json.code == 200){
+                        $('#btnCancelOpenGuichet').click();
+                        $('#guichet').val('');
+                        doShowSuccess(json.message);
+                        $(location).attr('href', "/home");
+                    }
+                    else {
+                        doShowErrorOpen(json.message);
+                    }
+                    $(".loader").fadeOut("1000");
+                    $('#btnOpenGuichet').attr("disabled", false);
+
+                },
+                 error: function (xmlHttpReques, chaineRetourne, objetExeption) {
+                     if(objetExeption == "Unauthorized"){
+                         $(location).attr('href',"/");
+                     }
+                     $(".loader").fadeOut("1000");
+                     $('#btnOpenGuichet').attr("disabled", false);
+                 }
+            });
+        }
+
+
         $('#btnCheckFees').click(
             function(e) {
                 doVerifyCheckfees();
@@ -221,7 +291,10 @@ $(document)
             var montant = $('#amountFees').val();
             var destination = $('#destinationFees').val();
             if(montant == ''){
-                doShowErrorAdd(labelVerifyAmount);
+                doShowErrorFees(labelVerifyAmount);
+            }
+            else if(destination == ''){
+                doShowErrorFees(labelVerifyCountry);
             }
             else{
                 var data = {

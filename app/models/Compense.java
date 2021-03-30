@@ -90,6 +90,7 @@ public class Compense {
     public static StringBuilder requestCompense(String debut, String fin, String profil, String projection){
 
         String profilAdminPayer = Play.application().configuration().getString("profil.payer");
+        String profilAdminMixte = Play.application().configuration().getString("profil.mixte");
 
         StringBuilder req = new StringBuilder(
                 "SELECT " + projection + " " +
@@ -109,11 +110,11 @@ public class Compense {
         }
 
         if(fin.isEmpty() && debut.isEmpty()){
-            if (profil.equals(profilAdminPayer)){
+            if (profil.equals(profilAdminPayer) || profil.equals(profilAdminMixte)){
                 req.append("WHERE " + Compense.COMPENSE.CONSUMER_ID + " = '" + consumerId +  "' ");
             }
         }else{
-            if (profil.equals(profilAdminPayer)){
+            if (profil.equals(profilAdminPayer) || profil.equals(profilAdminMixte)){
                 req.append("AND " + Compense.COMPENSE.CONSUMER_ID + " = '" + consumerId +  "' ");
             }
         }

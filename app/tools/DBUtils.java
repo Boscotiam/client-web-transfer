@@ -118,6 +118,26 @@ public class DBUtils {
         }
     }
 
+    public static String getPartnerNameByConsumerId(String partner) {
+        Connection connection = DB.getConnection();
+        CallableStatement cStmt = null;
+        String req = "{? = call f_get_partner_by_consumerid(?)}";
+        Logger.info("Req: " + req);
+        try {
+
+            cStmt = connection.prepareCall(req);
+            cStmt.registerOutParameter(1, Types.VARCHAR);
+            cStmt.setString(2, partner);
+            cStmt.execute();
+            return cStmt.getString(1);
+
+        } catch (SQLException e) {
+            return null;
+        } finally {
+            DBUtils.closeQuietly(connection, cStmt, null);
+        }
+    }
+
     public static ProcedureResult saveNotification(String adresse, String type, String titre, String notification) {
         Connection connection = null;
         CallableStatement callableStatement = null;
@@ -142,5 +162,4 @@ public class DBUtils {
             DBUtils.closeQuietly(connection, callableStatement);
         }
     }
-
 }

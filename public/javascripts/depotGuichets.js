@@ -5,7 +5,7 @@ $(document)
         $("#loader").fadeOut("1000");
         $(".loader").fadeOut("1000");
         //$(".imloadAdd").fadeOut("1000");
-        $('#menuDepot').addClass('active');
+        $('#menuDepotGuichet').addClass('active');
 
         $('.datepicker').datepicker({
           format: 'yyyy-mm-dd'
@@ -49,7 +49,7 @@ $(document)
             begin = $('#begin').val();
             end = $('#end').val();
 
-            appRoutes.controllers.Enquiries.getDepots(begin, end, page).ajax({
+            appRoutes.controllers.Enquiries.getDepotGuichets(begin, end, page).ajax({
                 success: function (json) {
                     if (json.code == 200) {
 
@@ -63,7 +63,8 @@ $(document)
                            html += '<tr id="' + transactions[i].reference + '">';
                            html += '<td>' + numLine + '</td>';
                            html += '<td class="reference" id="' + transactions[i].reference + '">' + transactions[i].reference + '</td>';
-                           html += '<td class="partner" id="' + transactions[i].partner + '">' + transactions[i].partner + '</td>';
+                           html += '<td class="guichet" id="' + transactions[i].guichet + '">' + transactions[i].guichet + '</td>';
+                           html += '<td class="codeGuichet" id="' + transactions[i].codeGuichet + '">' + transactions[i].codeGuichet + '</td>';
                            html += '<td class="compte" id="' + transactions[i].compte + '">' + transactions[i].compte + '</td>';
                            html += '<td class="text-right montant" id="' + transactions[i].montant + '">' + transactions[i].montant + '</td>';
                            html += '<td class="date" id="' + transactions[i].date + '">' + transactions[i].date + '</td>';
@@ -118,5 +119,6 @@ $(document)
                 doShowError(labelVerifySearch);
             }else{getTransactions();}
         }
+
 
     });

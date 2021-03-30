@@ -255,6 +255,56 @@ public class Enquiries extends Controller {
         return ok(node);
     }
 
+    public  F.Promise<Result> getDepotGuichets(String debut, String fin, int page, int perPage){
+        return promise(() -> getDepotGuichetPromise(debut, fin, page, perPage));
+    }
+
+    private static Result getDepotGuichetPromise(String debut, String fin, int page, int per_page) {
+
+        ObjectNode node = Json.newObject();
+        String session = session(Const.SESSION_CONNECTED);
+        if (session == null) {
+            node = Utils.getObjectNode(301, "Session Error");
+            Log.logActionOutput(node.toString());
+            return unauthorized(node);
+        }
+
+        String user = session(Const.SESSION_USER_NAME);
+        Log.logActionHeader(user, "getDepotPromise");
+        Log.logActionInput(request().queryString());
+
+        ArrayList<DepotGuichet> depots;
+
+        int total = 0;
+        depots = DepotGuichet.getDepotGuichets(debut, fin, session(Const.SESSION_PROFIL), page, per_page, false);
+
+        if(depots.size() == 0){
+            node = Utils.getObjectNode(201, Messages.get("label.empty.list"));
+            Log.logActionOutput(node.toString());
+            return ok(node);
+        }
+
+        node = Json.newObject();
+
+        total = DBUtils.getTotalRows(DepotGuichet.requestDepotGuichet(debut, fin,
+                session(Const.SESSION_PROFIL),
+                "COUNT(*) as total").toString());
+
+        int pageNumber = total / per_page;
+        if (total % per_page > 0) {
+            pageNumber++;
+        }
+
+        node.put("code", 200);
+        node.put("total_page", pageNumber);
+        node.put("current_page", page);
+        node.put("total", total);
+        node.put("per_page", per_page);
+        node.put("depots", Json.toJson(depots));
+        Log.logActionOutput(node.toString());
+        return ok(node);
+    }
+
     public  F.Promise<Result> getPartnerData() {
         return promise(() -> {
 
@@ -341,6 +391,7 @@ public class Enquiries extends Controller {
 
             json.put("consumerId", session(Const.SESSION_CONSUMER_ID));
             json.put("code", codePayment);
+            json.put("user", Integer.parseInt(session(Const.SESSION_USER_ID)));
             CompletionStage<JsonNode> servResponse = null;
 
             String url = Play.application().configuration().getString("infos.transfer.url");

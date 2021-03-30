@@ -61,22 +61,44 @@ $(document)
                         //var numLine = 0;
                         var numLine = (json.per_page * json.current_page) - json.per_page;
                         if (json.current_page == -1){numLine = 0}
+
                         for (var i in transactions) {
-                           var html = '';
-                           numLine += 1;
-                           html += '<tr id="' + transactions[i].transaction + '">';
-                           html += '<td>' + numLine + '</td>';
-                           html += '<td class="transaction" id="' + transactions[i].transaction + '">' + transactions[i].transaction + '</td>';
-                           html += '<td class="sender" id="' + transactions[i].sender + '">' + transactions[i].sender + '</td>';
-                           html += '<td class="text-right montant" id="' + transactions[i].montant + '">' + transactions[i].montant + '</td>';
-                           html += '<td class="date" id="' + transactions[i].date + '">' + transactions[i].date + '</td>';
-                           html += '<td class="etat" id="' + transactions[i].etat + '">' + transactions[i].etat + '</td>';
-                           html += '<td class="payer" id="' + transactions[i].payer + '">' + transactions[i].payer + '</td>';
-                           html += '<td class="payReference" id="' + transactions[i].payReference + '">' + transactions[i].payReference + '</td>';
-                           html += '<td class="datePay" id="' + transactions[i].datePay + '">' + transactions[i].datePay + '</td>';
-                           html += '<td><button type="button" class=" btn btn-default btn-xs btn-detail" data-toggle="modal" data-target="#modalTransaction">' + btnDetail + '</button></td>';
-                           html += '</tr>';
-                           $('#tbody').append(html);
+                            var html = '';
+                            numLine += 1;
+                            html += '<tr id="' + transactions[i].transaction + '" class="tr-shadow">';
+                            html += '<td>' + numLine + '</td>';
+                            html += '<td class="transaction desc" id="' + transactions[i].transaction + '">' + transactions[i].transaction + '</td>';
+                            html += '<td class="transmetter" id="' + transactions[i].transmetter + '">' + transactions[i].transmetter + '</td>';
+                            html += '<td class="montant text-right" id="' + transactions[i].montant + '">' + transactions[i].montant + '</td>';
+                            html += '<td class="date" id="' + transactions[i].date + '">' + transactions[i].date + '</td>';
+                            html += '<td class="etat" id="' + transactions[i].etat + '"><span class="block-email">' + transactions[i].etat + '</span></td>';
+                            html += '<td class="payer" id="' + transactions[i].payer + '">' + transactions[i].payer + '</td>';
+                            html += '<td class="payReference" id="' + transactions[i].payReference + '">' + transactions[i].payReference + '</td>';
+                            html += '<td class="datePay" id="' + transactions[i].datePay + '">' + transactions[i].datePay + '</td>';
+                            html += '<td>';
+                            html += '<div class="table-data-feature">';
+
+                            html += '<button class="btn-detail item addMore" title="' + btnDetail + '" data-toggle="modal" data-target="#modalTransaction">';
+                                html += '<i class="zmdi zmdi-more"></i>';
+                            html += '</button>';
+
+                            if (profilUser == profil_sender || profilUser == profil_mixte){
+                                html += '<button class="btnUpdate item addMore" title="' + labelUpdate + '" data-toggle="modal" data-target="#modalUpdate">';
+                                    html += '<i class="zmdi zmdi-edit"></i>';
+                                html += '</button>';
+                            }
+
+                            html += '</div>';
+                            html += '</td>';
+
+                            html += '<input type="hidden" class="sender" id="' + transactions[i].sender + '">';
+                            html += '<input type="hidden" class="transmetterTel" id="' + transactions[i].transmetterTel + '">';
+                            html += '<input type="hidden" class="beneficiaire" id="' + transactions[i].beneficiaire + '">';
+                            html += '<input type="hidden" class="beneficiaireTel" id="' + transactions[i].beneficiaireTel + '">';
+
+                            html += '</tr>';
+                            html += '<tr class="spacer"></tr>';
+                            $('#tbody').append(html);
                         }
 
                        var current_page = json.current_page;
@@ -93,11 +115,19 @@ $(document)
                        });
 
                        $(".btn-detail").click(function(){
-                            var transaction = $(this).parent().parent().children('.transaction').attr('id');
+                            var transaction = $(this).parent().parent().parent().attr('id');
                             var data = {
                                   'codePayment' : transaction
                             };
                             doGetTransactionTransfer(data);
+                       });
+
+                       $('.btnUpdate').click(function (e) {
+                           $('#codeTransaction').val($(this).parent().parent().parent().children('.transaction').attr('id'));
+                           $('#transmetter').val($(this).parent().parent().parent().children('.transmetter').attr('id'));
+                           $('#transmetterTel').val($(this).parent().parent().parent().children('.transmetterTel').attr('id'));
+                           $('#beneficiaire').val($(this).parent().parent().parent().children('.beneficiaire').attr('id'));
+                           $('#beneficiaireTel').val($(this).parent().parent().parent().children('.beneficiaireTel').attr('id'));
                        });
 
 
@@ -168,6 +198,78 @@ $(document)
                      $(".loader").fadeOut("1000");
                      $('#btnSearchPayment').attr("disabled", false);
                  }
+            });
+        }
+
+        $('#btnUpdate').click(function (e) {
+            verifyBeforeUpdate();
+        });
+
+        $(".transactionUpdate").keydown(function( event ) {
+            if(event.keyCode == 13){
+                verifyBeforeUpdate();
+            }
+        });
+
+        function verifyBeforeUpdate(){
+            $('#btnUpdate').attr("disabled", true);
+            var transmetter = $('#transmetter').val();
+            var transmetterTel = $('#transmetterTel').val();
+            var beneficiaire = $('#beneficiaire').val();
+            var beneficiaireTel = $('#beneficiaireTel').val();
+            if(transmetter == ''){
+                doShowErrorUpdate(labelVerifyTransmetter);
+                $('#btnUpdate').attr("disabled", false);
+            }
+            else if(transmetterTel == ''){
+                doShowErrorUpdate(labelVerifyTransmetterTel);
+                $('#btnUpdate').attr("disabled", false);
+            }
+            else if(beneficiaire == ''){
+                doShowErrorUpdate(labelVerifyBeneficiaire);
+                $('#btnUpdate').attr("disabled", false);
+            }
+            else if(beneficiaireTel == ''){
+                doShowErrorUpdate(labelVerifyBeneficiaireTel);
+                $('#btnUpdate').attr("disabled", false);
+            }
+            else {
+                var data ={
+                    'transaction' : $('#codeTransaction').val(),
+                    'transmetter' : transmetter,
+                    'transmetterTel' : transmetterTel,
+                    'beneficiaire' : beneficiaire,
+                    'beneficiaireTel' : beneficiaireTel
+                };
+                doUpdate(data);
+            }
+        }
+
+        function doUpdate(data){
+            $(".loader").fadeIn("1000");
+            $('#btnUpdate').attr("disabled", true);
+            appRoutes.controllers.UserManager.updateTransaction().ajax({
+                data : JSON.stringify(data),
+                contentType : 'application/json',
+                success : function (json) {
+                    if (json.code == 200) {
+                        $('#btnCancelUpdate').click();
+                        doShowSuccess(json.message);
+                        getSession();
+                    }
+                    else{
+                        doShowErrorUpdate(json.message);
+                    }
+                    $(".loader").fadeOut("1000");
+                    $('#btnUpdate').attr("disabled", false);
+                },
+                error: function (xmlHttpReques,chaineRetourne,objetExeption) {
+                    if(objetExeption == "Unauthorized"){
+                        $(location).attr('href',"/");
+                    }
+                    $(".loader").fadeOut("1000");
+                    $('#btnUpdate').attr("disabled", false);
+                }
             });
         }
 

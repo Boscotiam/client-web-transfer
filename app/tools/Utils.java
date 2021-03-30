@@ -108,6 +108,19 @@ public class Utils
 
     }
 
+    public static int getProfilID(String partnerType){
+        if (partnerType.equals("SENDER")) return Const.PROFIL_SENDER_ID;
+        if (partnerType.equals("PAYER")) return Const.PROFIL_PAYER_ID;
+        if (partnerType.equals("MIXTE")) return Const.PROFIL_MIXTE_ID;
+        return 0;
+    }
+    public static int getProfilAgent(String partnerType){
+        if (partnerType.equals("SENDER")) return Const.PROFIL_AGENT_SENDER_ID;
+        if (partnerType.equals("PAYER")) return Const.PROFIL_AGENT_PAYER_ID;
+        if (partnerType.equals("MIXTE")) return Const.PROFIL_AGENT_MIXTE_ID;
+        return 0;
+    }
+
 
 
 

@@ -28,22 +28,40 @@
                     <a href="/transactions">
                         <i class="fas fa-table"></i>@Messages.get("menu.transaction")</a>
                 </li>
-                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_PAYER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
+                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_PAYER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_MIXTE || session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
                     <li>
                         <a href="/compenses">
                             <i class="zmdi zmdi-hourglass-alt"></i>@Messages.get("menu.compense")</a>
                     </li>
                 }
-                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_SENDER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
+                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_SENDER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_MIXTE || session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
                     <li>
                         <a href="/depots">
                             <i class="zmdi zmdi-hourglass-alt"></i>@Messages.get("menu.depot")</a>
+                    </li>
+                }
+                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_SENDER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_MIXTE || session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
+                    <li>
+                        <a href="/depots/guichets">
+                            <i class="zmdi zmdi-hourglass-alt"></i>@Messages.get("menu.depot.guichet")</a>
                     </li>
                 }
                 @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
                 <li>
                     <a href="/partners">
                         <i class="fas fa-address-card"></i>@Messages.get("menu.partner")</a>
+                </li>
+                }
+                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_SENDER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_PAYER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_MIXTE) {
+                <li>
+                    <a href="/users">
+                        <i class="zmdi zmdi-accounts"></i>@Messages.get("menu.partner.user.list")</a>
+                </li>
+                }
+                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_SENDER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_PAYER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_MIXTE) {
+                <li>
+                    <a href="/guichets">
+                        <i class="fas fa-copy"></i>@Messages.get("menu.partner.guichet.list")</a>
                 </li>
                 }
             </ul>
@@ -70,16 +88,22 @@
                     <a href="/transactions">
                         <i class="fas fa-table"></i>@Messages.get("menu.transaction")</a>
                 </li>
-                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_PAYER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
+                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_PAYER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_MIXTE || session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
                     <li id="menuCompense">
                         <a href="/compenses">
                             <i class="zmdi zmdi-hourglass-alt"></i>@Messages.get("menu.compense")</a>
                     </li>
                 }
-                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_SENDER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
+                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_SENDER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_MIXTE || session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
                     <li id="menuDepot">
                         <a href="/depots">
                             <i class="zmdi zmdi-hourglass-alt"></i>@Messages.get("menu.depot")</a>
+                    </li>
+                }
+                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_SENDER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_MIXTE || session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
+                    <li id="menuDepotGuichet">
+                        <a href="/depots/guichets">
+                            <i class="zmdi zmdi-hourglass-alt"></i>@Messages.get("menu.depot.guichet")</a>
                     </li>
                 }
                 @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
@@ -87,6 +111,18 @@
                         <a href="/partners">
                             <i class="fas fa-copy"></i>@Messages.get("menu.partner")</a>
                     </li>
+                }
+                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_SENDER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_PAYER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_MIXTE) {
+                <li id="menuUser">
+                    <a href="/users">
+                        <i class="zmdi zmdi-accounts"></i>@Messages.get("menu.partner.user.list")</a>
+                </li>
+                }
+                @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_SENDER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_PAYER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_MIXTE) {
+                <li id="menuGuichet">
+                    <a href="/guichets">
+                        <i class="fas fa-copy"></i>@Messages.get("menu.partner.guichet.list")</a>
+                </li>
                 }
             </ul>
         </nav>

@@ -23,7 +23,24 @@
        var profil_mixte = '@Const.PROFIL_MIXTE';
        var profilUser = '@userSession.getProfil()';
 
+       var idPartnerInSession = '@userSession.getIdPartner()';
+       var partnerInSession = '@userSession.getConsumerId()';
+
        var labelVerifyAmount = '@Messages.get("label.verify.amount")';
+       var labelPartner = '@Messages.get("label.partner")';
+       var labelPartnerGuichets = '@Messages.get("menu.partner.guichet.list")';
+
+       var labelLock = '@Messages.get("label.btn.lock.guichet")';
+       var labelUnlock = '@Messages.get("label.btn.unlock.guichet")';
+
+       var labelMessageLock = '@Messages.get("label.message.lock")';
+       var labelMessageUnlock = '@Messages.get("label.message.unlock")';
+
+       var labelVerifyNom = '@Messages.get("label.verify.guichet.name")';
+       var labelVerifyAdress = '@Messages.get("label.verify.guichet.adresse")';
+
+       var labelDepot = '@Messages.get("label.depot.partner")';
+
 </script>
 
     <!-- Fontfaces CSS-->
@@ -92,22 +109,24 @@
                     <div class="row">
                         <div class="col-md-12">
                             <!-- DATA TABLE -->
-                            <h3 class="title-5 m-b-35">@Messages.get("menu.compense")</h3>
+                            @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
+                            <h3 id="titlePage" class="title-5 m-b-35"></h3>
+                            }
+                            @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_SENDER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_PAYER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_MIXTE) {
+                            <h3 class="title-5 m-b-35">@Messages.get("menu.partner.guichet.list")</h3>
+                            }
                             <div class="table-data__tool">
                                 <div class="table-data__tool-left">
-                                    <div class="rs-select2--light rs-select2--md">
-                                        <input type="text" id="begin" name="text-input" placeholder="@Messages.get("label.begin")" class="datepicker form-control">
+                                    <!--<div class="rs-select2&#45;&#45;light rs-select2&#45;&#45;md">
+                                        <input type="text" id="begin" name="text-input" placeholder="@Messages.get("label.name")" class="form-control">
                                     </div>
-                                    <div class="rs-select2--light rs-select2--sm">
-                                        <input type="text" id="end" name="text-input" placeholder="@Messages.get("label.end")" class="datepicker form-control">
-                                    </div>
-                                    <button id="btnSearch" class="au-btn au-btn-icon btn-primary au-btn--small">
-                                        <i class="zmdi zmdi-search"></i>@Messages.get("btn.search")</button>
+                                    <button id="btnSearch" class="au-btn au-btn-icon btn-primary au-btn&#45;&#45;small">
+                                        <i class="zmdi zmdi-search"></i>@Messages.get("btn.search")</button>-->
                                 </div>
                                 <div class="table-data__tool-right">
-                                    @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_PAYER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_MIXTE) {
-                                    <button class="au-btn au-btn-icon btn btn-info au-btn--small" data-toggle="modal" data-target="#modalNewCompense">
-                                        <i class="zmdi zmdi-plus"></i>@Messages.get("btn.new.compense")</button>
+                                    @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_SENDER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_PAYER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_MIXTE) {
+                                    <button class="au-btn au-btn-icon btn btn-info au-btn--small" data-toggle="modal" data-target="#modalNewGuichet">
+                                        <i class="zmdi zmdi-plus"></i>@Messages.get("btn.new.guichet")</button>
                                     }
                                     <!--<button class="au-btn au-btn-icon au-btn&#45;&#45;green au-btn&#45;&#45;small">
                                         <i class="zmdi zmdi-collection-pdf"></i>@Messages.get("btn.pdf")</button>-->
@@ -121,16 +140,18 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="table-responsive table--no-card m-b-30">
-                                <table class="table table-borderless table-striped table-earning">
+                                <table class="table table-data2">
                                     <thead>
                                     <tr>
                                         <th>@Messages.get("label.num")</th>
-                                        <th>@Messages.get("label.reference")</th>
-                                        <th>@Messages.get("label.partner")</th>
-                                        <th>@Messages.get("label.account")</th>
-                                        <th class="text-right">@Messages.get("label.amount")</th>
-                                        <th>@Messages.get("label.date")</th>
-                                        <th>@Messages.get("label.status")</th>
+                                        <th>@Messages.get("guichet.code")</th>
+                                        <th>@Messages.get("guichet.compte")</th>
+                                        <th>@Messages.get("guichet.solde")</th>
+                                        <th>@Messages.get("guichet.libelle")</th>
+                                        <th>@Messages.get("guichet.adresse")</th>
+                                        <th>@Messages.get("guichet.date.create")</th>
+                                        <th>@Messages.get("guichet.open")</th>
+                                        <th>@Messages.get("label.action")</th>
                                     </tr>
                                     </thead>
                                     <tbody id="tbody">
@@ -161,11 +182,11 @@
 
 </div>
 
-<div class="modal fade show" id="modalNewCompense" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel">
+<div class="modal fade show" id="modalNewGuichet" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="mediumModalLabel">@Messages.get("add.new.compense")</h5>
+                <h5 class="modal-title" id="mediumModalLabel">@Messages.get("add.new.guichet")</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -175,21 +196,100 @@
                 <ol id="olShowSuccessAdd"></ol>
                 <div class="row form-group">
                     <div class="col col-md-3">
-                        <label class=" form-control-label">@Messages.get("add.new.compense.amount") <span class="requiered">*</span></label>
+                        <label class=" form-control-label">@Messages.get("guichet.libelle") <span class="requiered">*</span></label>
                     </div>
                     <div class="col-12 col-md-8">
-                        <input type="text" id="montant" name="text-input" placeholder="@Messages.get("add.new.transfer.amount")" class="form-control">
-                        <small class="form-text text-muted">@Messages.get("add.new.compense.amount.label")</small>
+                        <input type="text" id="guichetName" name="text-input" placeholder="@Messages.get("guichet.libelle")" class="guichetAdd form-control">
+                        <small class="form-text text-muted">@Messages.get("guichet.libelle.label")</small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("guichet.adresse") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="text" id="guichetAdresse" name="text-input" placeholder="@Messages.get("guichet.adresse")" class="guichetAdd form-control">
+                        <small class="form-text text-muted">@Messages.get("guichet.adresse.label")</small>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="btnCancelCompense" type="button" class="btn btn-secondary" data-dismiss="modal">@Messages.get("btn.cancel")</button>
-                <button id="btnCompense" type="button" class="btn btn-primary"> <i class="fa fa-spinner fa-spin loader"></i> @Messages.get("btn.init")</button>
+                <button id="btnCancelAdd" type="button" class="btn btn-secondary" data-dismiss="modal">@Messages.get("btn.cancel")</button>
+                <button id="btnAdd" type="button" class="btn btn-primary"> <i class="fa fa-spinner fa-spin loader"></i> @Messages.get("btn.add")</button>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade show" id="modalDepot" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">@Messages.get("do.depot")</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ol id="olShowErrorDepot"></ol>
+                <ol id="olShowSuccessDepot"></ol>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("guichet.code") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="text" id="codeGuichet" name="text-input" disabled placeholder="@Messages.get("guichet.code")" class="form-control">
+                        <small class="form-text text-muted">@Messages.get("guichet.code.label")</small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("guichet.libelle") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="text" id="libelleGuichet" name="text-input" disabled placeholder="@Messages.get("guichet.libelle")" class="form-control">
+                        <small class="form-text text-muted">@Messages.get("guichet.libelle.label")</small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">@Messages.get("partner.depot.amount") <span class="requiered">*</span></label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="text" id="montantDepot" name="text-input" placeholder="@Messages.get("partner.depot.amount")" class="form-control">
+                        <small class="form-text text-muted">@Messages.get("partner.depot.amount.label")</small>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnCancelDepot" type="button" class="btn btn-secondary" data-dismiss="modal">@Messages.get("btn.cancel")</button>
+                <button id="btnSaveDepot" type="button" class="btn btn-primary"> <i class="fa fa-spinner fa-spin loader"></i> @Messages.get("btn.save")</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" id="modalDialog" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticModalLabel">@Messages.get("dialog.confirm")</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="messageDialog">
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button id="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button id="btnConfirm" type="button" class="btn btn-primary">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Jquery JS-->
 <script src="../assets/vendor/jquery-3.2.1.min.js"></script>
@@ -221,7 +321,7 @@
 <script src="@controllers.routes.HomeController.jsRoutes()" type="text/javascript"></script>
 <script src="../assets/javascripts/jquery.twbsPagination.js"></script>
 <script src="../assets/javascripts/api.js"></script>
-<script src="../assets/javascripts/compenses.js"></script>
+<script src="../assets/javascripts/guichets.js"></script>
 
 <script>
     (function($){

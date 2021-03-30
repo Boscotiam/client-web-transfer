@@ -23,7 +23,7 @@
        var profil_mixte = '@Const.PROFIL_MIXTE';
        var profilUser = '@userSession.getProfil()';
 
-       var labelVerifyAmount = '@Messages.get("label.verify.amount")';
+       var btnDetail = '@Messages.get("btn.detail")';
 </script>
 
     <!-- Fontfaces CSS-->
@@ -92,7 +92,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <!-- DATA TABLE -->
-                            <h3 class="title-5 m-b-35">@Messages.get("menu.compense")</h3>
+                            <h3 class="title-5 m-b-35">@Messages.get("label.transactions")</h3>
                             <div class="table-data__tool">
                                 <div class="table-data__tool-left">
                                     <div class="rs-select2--light rs-select2--md">
@@ -105,12 +105,8 @@
                                         <i class="zmdi zmdi-search"></i>@Messages.get("btn.search")</button>
                                 </div>
                                 <div class="table-data__tool-right">
-                                    @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_PAYER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_MIXTE) {
-                                    <button class="au-btn au-btn-icon btn btn-info au-btn--small" data-toggle="modal" data-target="#modalNewCompense">
-                                        <i class="zmdi zmdi-plus"></i>@Messages.get("btn.new.compense")</button>
-                                    }
-                                    <!--<button class="au-btn au-btn-icon au-btn&#45;&#45;green au-btn&#45;&#45;small">
-                                        <i class="zmdi zmdi-collection-pdf"></i>@Messages.get("btn.pdf")</button>-->
+                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                        <i class="zmdi zmdi-collection-pdf"></i>@Messages.get("btn.pdf")</button>
                                     <button class="au-btn au-btn-icon au-btn--green au-btn--small">
                                         <i class="zmdi zmdi-collection-text"></i></i>@Messages.get("btn.xls")</button>
                                 </div>
@@ -126,11 +122,14 @@
                                     <tr>
                                         <th>@Messages.get("label.num")</th>
                                         <th>@Messages.get("label.reference")</th>
-                                        <th>@Messages.get("label.partner")</th>
-                                        <th>@Messages.get("label.account")</th>
+                                        <th>@Messages.get("label.sender")</th>
                                         <th class="text-right">@Messages.get("label.amount")</th>
                                         <th>@Messages.get("label.date")</th>
                                         <th>@Messages.get("label.status")</th>
+                                        <th>@Messages.get("label.payer")</th>
+                                        <th>@Messages.get("label.reference.pay")</th>
+                                        <th>@Messages.get("label.date.pay")</th>
+                                        <th>@Messages.get("label.action")</th>
                                     </tr>
                                     </thead>
                                     <tbody id="tbody">
@@ -161,31 +160,30 @@
 
 </div>
 
-<div class="modal fade show" id="modalNewCompense" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel">
+
+<div class="modal fade show" id="modalTransaction" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="mediumModalLabel">@Messages.get("add.new.compense")</h5>
+                <h5 class="modal-title" id="scrollmodalLabel">@Messages.get("Transaction.data")</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-                <ol id="olShowErrorAdd"></ol>
-                <ol id="olShowSuccessAdd"></ol>
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label class=" form-control-label">@Messages.get("add.new.compense.amount") <span class="requiered">*</span></label>
-                    </div>
-                    <div class="col-12 col-md-8">
-                        <input type="text" id="montant" name="text-input" placeholder="@Messages.get("add.new.transfer.amount")" class="form-control">
-                        <small class="form-text text-muted">@Messages.get("add.new.compense.amount.label")</small>
-                    </div>
-                </div>
+                <ol id="olShowErrorPay"></ol>
+                <ol id="olShowSuccessPay"></ol>
+
+                <table class="table table-top-campaign">
+                    <tbody id="tbodyTransaction">
+
+                    </tbody>
+                </table>
+
             </div>
             <div class="modal-footer">
-                <button id="btnCancelCompense" type="button" class="btn btn-secondary" data-dismiss="modal">@Messages.get("btn.cancel")</button>
-                <button id="btnCompense" type="button" class="btn btn-primary"> <i class="fa fa-spinner fa-spin loader"></i> @Messages.get("btn.init")</button>
+                <button id="btnCancelPay" type="button" class="btn btn-secondary" data-dismiss="modal">@Messages.get("btn.close")</button>
+                <button id="btnPrint" type="button" class="btn btn-primary"><i class="fa fa-spinner fa-spin loader"></i> @Messages.get("btn.print")</button>
             </div>
         </div>
     </div>
@@ -221,7 +219,7 @@
 <script src="@controllers.routes.HomeController.jsRoutes()" type="text/javascript"></script>
 <script src="../assets/javascripts/jquery.twbsPagination.js"></script>
 <script src="../assets/javascripts/api.js"></script>
-<script src="../assets/javascripts/compenses.js"></script>
+<script src="../assets/javascripts/transactions.js"></script>
 
 <script>
     (function($){

@@ -111,6 +111,7 @@ public class Operations extends Controller {
             JsonNode jsonInput = request().body().asJson();
 
             String transmetter = jsonInput.findPath("transmetter").textValue();
+            String transmetterTel = jsonInput.findPath("transmetterTel").textValue();
             String transmetterIdentify = jsonInput.findPath("transmetterIdentify").textValue();
             String beneficiary = jsonInput.findPath("beneficiary").textValue();
             String mobile = jsonInput.findPath("mobile").textValue();
@@ -122,12 +123,14 @@ public class Operations extends Controller {
             json.put("consumerId", session(Const.SESSION_CONSUMER_ID));
             json.put("montant", Double.parseDouble(montant));
             json.put("transmetter", transmetter);
+            json.put("transmetterTel", transmetterTel);
             json.put("transmetterIdentify", transmetterIdentify);
             json.put("beneficiary", beneficiary);
             json.put("mobile", mobile);
             json.put("user", Integer.parseInt(session(Const.SESSION_USER_ID)));
             json.put("destination", destination);
             json.put("deviceId", session(Const.SESSION_DEVICE_ID));
+            json.put("guichet", session(Const.SESSION_GUICHET));
             CompletionStage<JsonNode> servResponse = null;
 
             String url = Play.application().configuration().getString("send.transfer.url");
@@ -184,6 +187,7 @@ public class Operations extends Controller {
             json.put("beneficiaryIdentify", beneficiaryIdentify);
             json.put("user", Integer.parseInt(session(Const.SESSION_USER_ID)));
             json.put("deviceId", session(Const.SESSION_DEVICE_ID));
+            json.put("guichet", session(Const.SESSION_GUICHET));
             CompletionStage<JsonNode> servResponse = null;
 
             String url = Play.application().configuration().getString("pay.transfer.url");

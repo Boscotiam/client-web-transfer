@@ -20,6 +20,7 @@
        var profil_admin = '@Const.PROFIL_ADMIN';
        var profil_sender = '@Const.PROFIL_SENDER';
        var profil_payer = '@Const.PROFIL_PAYER';
+       var profil_mixte = '@Const.PROFIL_MIXTE';
        var profilUser = '@userSession.getProfil()';
 
        var labelVerifyAmount = '@Messages.get("label.verify.amount")';
@@ -30,13 +31,18 @@
        var labelUsers = '@Messages.get("label.users.partner")';
 
        var labelVerifyPartner = '@Messages.get("label.verify.partner")';
+       var labelVerifyPartnerAdmin = '@Messages.get("label.verify.partner.admin")';
        var labelVerifyName = '@Messages.get("label.verify.partner.name")';
        var labelVerifyType = '@Messages.get("label.verify.partner.type")';
        var labelVerifyAdress = '@Messages.get("label.verify.partner.adress")';
        var labelVerifyTel = '@Messages.get("label.verify.partner.tel")';
        var labelVerifyEmail = '@Messages.get("label.verify.partner.email")';
        var labelVerifyCountry = '@Messages.get("label.verify.partner.country")';
-      var labelVerifyAmount = '@Messages.get("label.verify.amount")';
+       var labelVerifyAmount = '@Messages.get("label.verify.amount")';
+
+       var labelVerifyNom = '@Messages.get("label.verify.last.name")';
+       var labelVerifyPrenom = '@Messages.get("label.verify.first.name")';
+       var labelVerifyLogin = '@Messages.get("label.verify.login")';
 
        var labelCountry = '@Messages.get("label.country")';
        var labelBank = '@Messages.get("label.bank")';
@@ -121,8 +127,8 @@
                                 <div class="table-data__tool-right">
                                     <button class="au-btn au-btn-icon btn btn-info au-btn--small" data-toggle="modal" data-target="#modalNewPartner">
                                         <i class="zmdi zmdi-plus"></i>@Messages.get("btn.new.partner")</button>
-                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                        <i class="zmdi zmdi-collection-pdf"></i>@Messages.get("btn.pdf")</button>
+                                    <!--<button class="au-btn au-btn-icon au-btn&#45;&#45;green au-btn&#45;&#45;small">
+                                        <i class="zmdi zmdi-collection-pdf"></i>@Messages.get("btn.pdf")</button>-->
                                     <button class="au-btn au-btn-icon au-btn--green au-btn--small">
                                         <i class="zmdi zmdi-collection-text"></i></i>@Messages.get("btn.xls")</button>
                                 </div>
@@ -185,7 +191,8 @@
             <div class="modal-body">
                 <ul id="myTabs" class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active tabPartner"><a id="aAddDataPartner" href="#addDataPartner" aria-controls="addDataPartner" role="tab" data-toggle="tab"><span class="badge">1</span>@Messages.get("new.partner.data")</a></li>
-                    <li role="presentation" class="tabPartner"><a id="aAddDataBankPartner" href="#addDataBankPartner" aria-controls="addDataBankPartner" role="tab"><span class="badge">2</span>@Messages.get("new.partner.data.bank")</a></li>
+                    <li role="presentation" class="tabPartner"><a id="aAddDataAdminPartner" href="#addDataAdminPartner" aria-controls="addDataAdminPartner" role="tab"><span class="badge">2</span>@Messages.get("new.partner.data.admin")</a></li>
+                    <li role="presentation" class="tabPartner"><a id="aAddDataBankPartner" href="#addDataBankPartner" aria-controls="addDataBankPartner" role="tab"><span class="badge">3</span>@Messages.get("new.partner.data.bank")</a></li>
                 </ul>
                 <div class="tab-content">
                     <ol id="olShowErrorAdd"></ol>
@@ -209,6 +216,7 @@
                                     <option value="">@Messages.get("partner.type")</option>
                                     <option value="SENDER">@Messages.get("partner.type.sender")</option>
                                     <option value="PAYER">@Messages.get("partner.type.payer")</option>
+                                    <option value="MIXTE">@Messages.get("partner.type.mixte")</option>
                                 </select>
                                 <small class="form-text text-muted">@Messages.get("partner.type.choice")</small>
                             </div>
@@ -248,6 +256,36 @@
                                 <select name="select" id="partnerCountry" class="form-control form-part">
                                 </select>
                                 <small class="form-text text-muted">@Messages.get("partner.country.choice")</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="addDataAdminPartner">
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Messages.get("partner.admin.nom")</label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <input type="text" id="partnerAdminNom" name="text-input" placeholder="@Messages.get("partner.admin.nom")" class="userAdd form-control form-admin">
+                                <small class="form-text text-muted">@Messages.get("partner.admin.nom.label")</small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Messages.get("partner.admin.prenom")</label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <input type="text" id="partnerAdminPrenom" name="text-input" placeholder="@Messages.get("partner.admin.prenom")" class="userAdd form-control form-admin">
+                                <small class="form-text text-muted">@Messages.get("partner.admin.prenom.label")</small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Messages.get("partner.admin.login")</label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <input type="text" id="partnerAdminLogin" name="text-input" placeholder="@Messages.get("partner.admin.login")" class="userAdd form-control form-admin">
+                                <small class="form-text text-muted">@Messages.get("partner.admin.login.label")</small>
                             </div>
                         </div>
                     </div>

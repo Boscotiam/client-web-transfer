@@ -114,10 +114,17 @@ public class PartnerManager extends Controller {
             String email = json.findPath("email").textValue();
             String country = json.findPath("country").textValue();
 
+            String nom = json.findPath("nom").textValue();
+            String prenom = json.findPath("prenom").textValue();
+            String login = json.findPath("login").textValue();
+            String pass = Utils.generateUserPassword();
+
             String bank = json.findPath("bank").textValue();
             String guichet = json.findPath("guichet").textValue();
             String account = json.findPath("account").textValue();
             String rib = json.findPath("rib").textValue();
+
+            int profil = Utils.getProfilID(type);
 
             if (!Utils.checkData(name, type, adress, telephone, email, country)) {
                 node.put("code", 201);
@@ -125,13 +132,20 @@ public class PartnerManager extends Controller {
                 Log.logActionOutput(node.toString());
                 return ok(node);
             }
-            AddPartnerResult result = Partner.addPartner(name, type, adress, telephone, email, country);
+            AddPartnerResult result = Partner.addPartner(name.toUpperCase(), type, adress, telephone, email, country);
 
             if (result.getResult() == 0) {
                 node.put("code", 201);
                 node.put("message", result.getMessage());
                 return ok(node);
             } else {
+
+                int idPartner = Partner.getIdParter(result.getConsumerId());
+
+                if(Utils.checkData(nom, prenom, login)){
+                    User.addUser(nom.toUpperCase(), prenom.toUpperCase(), telephone, email, login, pass,
+                            profil, idPartner);
+                }
 
                 if(Utils.checkData(bank, guichet, account, rib)){
                     Partner.addBankPartner(result.getConsumerId(), result.getCompteCharge(),
@@ -140,10 +154,17 @@ public class PartnerManager extends Controller {
 
                 node.put("code", 200);
                 node.put("message", result.getMessage());
-                String message = Messages.get("message.hi") + " " + name + ", " +
+                String message = Messages.get("message.hi") + " " + name.toUpperCase() + ", " +
                         Messages.get("message.create.partner") + "." ;
                 DBUtils.saveNotification(telephone, "SMS", Messages.get("message.header"), message);
                 DBUtils.saveNotification(email, "MAIL", Messages.get("message.header"), message);
+
+                String messageUser = Messages.get("message.hi") + " " + prenom.toUpperCase() + " " + nom.toUpperCase() + ", " +
+                        Messages.get("message.create.user") + " ; " +
+                        Messages.get("message.create.user.login")  + " : " + login + ", " +
+                        Messages.get("message.create.user.pass")  + " : " + pass + " . " ;
+                DBUtils.saveNotification(telephone, "SMS", Messages.get("message.header"), messageUser);
+                DBUtils.saveNotification(email, "MAIL", Messages.get("message.header"), messageUser);
             }
             Log.logActionOutput(node.toString());
             return ok(node);
@@ -194,10 +215,6 @@ public class PartnerManager extends Controller {
                 node.put("message", result.getMessage());
                 return ok(node);
             } else {
-
-
-                /*Bonjour, vous venez de recevoir un dépôt SUNRISE TRANSFER. Nouvelle balance de votre compte charge: DEPOT21h2186109. message.depot.balance: 5000000.0.*/
-
                 node.put("code", 200);
                 node.put("message", result.getMessage());
                 String message = Messages.get("message.hi") + ", " +

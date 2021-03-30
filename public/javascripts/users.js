@@ -4,7 +4,12 @@ $(document)
 
         $("#loader").fadeOut("1000");
         $(".loader").fadeOut("1000");
-        $('#menuPartner').addClass('active');
+
+        if (profilUser == profil_admin){
+            $('#menuPartner').addClass('active');
+        }else{
+            $('#menuUser').addClass('active');
+        }
 
         var partner;
         var partnerId;
@@ -21,7 +26,7 @@ $(document)
         var url = window.location.search;
         var id = url.substring(url.lastIndexOf("=")+1);
         var sp = id.split('_');
-        var partnerId = sp[1];
+        partnerId = sp[1];
 
         getSession();
 
@@ -45,33 +50,35 @@ $(document)
           });
         }
 
-        function getUsers(partner){
-          $("#loader").fadeIn("1000");
-          $('#tbody').html('');
-          $('#titlePage').html('');
-          partner = partnerId;
-          appRoutes.controllers.UserController.getUsers(partner).ajax({
-              success: function (json) {
-                  if (json.code == 200) {
+        function getUsers(varpartner){
+            $("#loader").fadeIn("1000");
+            $('#tbody').html('');
+            $('#titlePage').html('');
+            if (partnerId == null || partnerId == '') {partnerId = idPartnerInSession;}
+            varpartner = partnerId;
+            appRoutes.controllers.UserManager.getUsers(varpartner).ajax({
+                success: function (json) {
+                    if (json.code == 200) {
 
-                      $('#titlePage').append(labelPartner + " " + json.name + ": " + labelPartnerUsers);
+                        if (profilUser == profil_admin){
+                          $('#titlePage').append(labelPartner + " " + json.name + ": " + labelPartnerUsers);
+                        }
 
-
-                       var listProfil = json.profils;
-                       $('#userProfil').html('');
-                       $('#userProfilUpdate').html('');
-                       var htmlEnteteProfil = '<option value="">' + labelProfil + '</option>';
-                       $('#userProfil').append(htmlEnteteProfil);
-                       $('#userProfilUpdate').append(htmlEnteteProfil);
-                       for (var i in listProfil) {
+                        /*var listProfil = json.profils;
+                        $('#userProfil').html('');
+                        $('#userProfilUpdate').html('');
+                        var htmlEnteteProfil = '<option value="">' + labelProfil + '</option>';
+                        $('#userProfil').append(htmlEnteteProfil);
+                        $('#userProfilUpdate').append(htmlEnteteProfil);
+                        for (var i in listProfil) {
                            var html = '<option value="' + listProfil[i].idProfil + '">' + listProfil[i].libelleProfil + '</option>';
                            $('#userProfil').append(html);
                            $('#userProfilUpdate').append(html);
-                       }
+                        }*/
 
-                      var users = json.users;
-                      var numLine = 0;
-                      for (var i in users) {
+                        var users = json.users;
+                        var numLine = 0;
+                        for (var i in users) {
                          var html = '';
                          numLine += 1;
                          html += '<tr id="' + users[i].idUser + '" class="tr-shadow">';
@@ -93,9 +100,11 @@ $(document)
                          html += '<td>';
                          html += '<div class="table-data-feature">';
 
-                              html += '<button class="btnUpdateUser item addMore" title="' + labelUpdate + '" data-toggle="modal" data-target="#modalUpdateUser">';
-                                  html += '<i class="zmdi zmdi-edit"></i>';
-                              html += '</button>';
+                              if (profilUser != profil_admin){
+                                  html += '<button class="btnUpdateUser item addMore" title="' + labelUpdate + '" data-toggle="modal" data-target="#modalUpdateUser">';
+                                      html += '<i class="zmdi zmdi-edit"></i>';
+                                  html += '</button>';
+                              }
 
                               html += '<button class="reinitPass item addMore" title="' + labelReinit + '" data-toggle="modal" data-target="#modalDialog">';
                                   html += '<i class="zmdi zmdi-redo"></i>';
@@ -117,10 +126,10 @@ $(document)
                          html += '</tr>';
                          html += '<tr class="spacer"></tr>';
                          $('#tbody').append(html);
-                      }
+                        }
 
 
-                      $(".reinitPass").click(function(){
+                        $(".reinitPass").click(function(){
                           action = "reinit";
                           idUser = $(this).parent().parent().parent().attr('id');
                           prenom = $(this).parent().parent().parent().children('.prenom').attr('id');
@@ -130,9 +139,9 @@ $(document)
                           $('#messageDialog').html('');
                           $('#messageDialog').append(labelMessageReinit + ' ' +
                                                       prenom + ' ' + nom + ' ?');
-                      });
+                        });
 
-                      $(".block").click(function(){
+                        $(".block").click(function(){
                           action = "verrou";
                           idUser = $(this).parent().parent().parent().attr('id');
                           prenom = $(this).parent().parent().parent().children('.prenom').attr('id');
@@ -141,9 +150,9 @@ $(document)
                           $('#messageDialog').html('');
                           $('#messageDialog').append(labelMessageBlock + ' ' +
                                                       prenom + ' ' + nom + ' ?');
-                      });
+                        });
 
-                      $(".deblock").click(function(){
+                        $(".deblock").click(function(){
                           action = "verrou";
                           idUser = $(this).parent().parent().parent().attr('id');
                           prenom = $(this).parent().parent().parent().children('.prenom').attr('id');
@@ -152,20 +161,21 @@ $(document)
                           $('#messageDialog').html('');
                           $('#messageDialog').append(labelMessageDeblock + ' ' +
                                                       prenom + ' ' + nom + ' ?');
-                      });
+                        });
 
-                      $('.btnUpdateUser').click(function (e) {
+                        $('.btnUpdateUser').click(function (e) {
                           idUser = $(this).parent().parent().parent().attr('id');
                           $('#userFirstNameUpdate').val($(this).parent().parent().parent().children('.prenom').attr('id'));
                           $('#userLastNameUpdate').val($(this).parent().parent().parent().children('.nom').attr('id'));
                           $('#userTelUpdate').val($(this).parent().parent().parent().children('.telephone').attr('id'));
                           $('#userEmailUpdate').val($(this).parent().parent().parent().children('.email').attr('id'));
-                          $('#userProfilUpdate').val($(this).parent().parent().parent().children('.idProfil').attr('id'));
-                      });
+                          //$('#userProfilUpdate').val($(this).parent().parent().parent().children('.idProfil').attr('id'));
+                        });
 
-                  } else if(json.code == 201){
+                    }
+                    else if(json.code == 201){
                       doShowWarning(json.message);
-                      var listProfil = json.profils;
+                      /*var listProfil = json.profils;
                       $('#userProfil').html('');
                       $('#userProfilUpdate').html('');
                       var htmlEnteteProfil = '<option value="">' + labelProfil + '</option>';
@@ -175,21 +185,21 @@ $(document)
                           var html = '<option value="' + listProfil[i].idProfil + '">' + listProfil[i].libelleProfil + '</option>';
                           $('#userProfil').append(html);
                           $('#userProfilUpdate').append(html);
-                      }
-                  }else{
+                      }*/
+                    }else{
                       $(location).attr('href',"/");
-                  }
-                  $("#loader").fadeOut("1000");
-              },
-              error: function (xmlHttpReques,chaineRetourne,objetExeption) {
+                    }
+                    $("#loader").fadeOut("1000");
+                },
+                error: function (xmlHttpReques,chaineRetourne,objetExeption) {
 
                   if(objetExeption == "Unauthorized"){
                       $(location).attr('href',"/");
                   }
 
                   $("#loader").fadeOut("1000");
-              }
-          });
+                }
+            });
         }
 
         $('#btnConfirm').click(function (e) {
@@ -215,7 +225,7 @@ $(document)
         function doReinitPassword(data){
             $(".loader").fadeIn("1000");
             $('#btnConfirm').attr("disabled", true);
-            appRoutes.controllers.UserController.reinitPassword().ajax({
+            appRoutes.controllers.UserManager.reinitPassword().ajax({
                  data : JSON.stringify(data),
                  contentType : 'application/json',
                  success : function (json) {
@@ -242,7 +252,7 @@ $(document)
         function doBlockOrUnblock(data) {
             $(".loader").fadeIn("1000");
             $('#btnConfirm').attr("disabled", true);
-            appRoutes.controllers.UserController.lockOrUnlockUser().ajax({
+            appRoutes.controllers.UserManager.lockOrUnlockUser().ajax({
                 data : JSON.stringify(data),
                 contentType : 'application/json',
                 success : function (json) {
@@ -250,7 +260,7 @@ $(document)
                     $('#btnConfirm').attr("disabled", false);
                     $('#btnClose').click();
                     if(json.code == 200){
-                        getUsers();
+                        getSession();
                         doShowSuccess(json.message);
                     }else {
                         doShowWarning(json.message);
@@ -284,7 +294,7 @@ $(document)
             var telephone = $('#userTel').val();
             var email = $('#userEmail').val();
             var login = $('#userLogin').val();
-            var profil = $('#userProfil').val();
+            //var profil = $('#userProfil').val();
             if(prenom == ''){
                 doShowErrorAdd(labelVerifyPrenom);
                 $('#btnAdd').attr("disabled", false);
@@ -305,10 +315,10 @@ $(document)
                 doShowErrorAdd(labelVerifyLogin);
                 $('#btnAdd').attr("disabled", false);
             }
-            else if(profil == ''){
+            /*else if(profil == ''){
                 doShowErrorAdd(labelVerifyProfil);
                 $('#btnAdd').attr("disabled", false);
-            }
+            }*/
             else {
                 var data ={
                     'nom' : nom,
@@ -316,7 +326,7 @@ $(document)
                     'telephone' : telephone,
                     'email' : email,
                     'login' : login,
-                    'profil' : profil,
+                    //'profil' : profil,
                     'partner' : partnerId
                 };
                 doAddUser(data);
@@ -325,7 +335,7 @@ $(document)
 
         function doAddUser(data){
             $(".loader").fadeIn("1000");
-            appRoutes.controllers.UserController.addUser().ajax({
+            appRoutes.controllers.UserManager.addUser().ajax({
                 data : JSON.stringify(data),
                 contentType : 'application/json',
                 success : function (json) {
@@ -333,7 +343,7 @@ $(document)
                         $('#btnCancelAdd').click();
                         cleanAllfieldsPopupAdd();
                         doShowSuccess(json.message);
-                        getUsers();
+                        getSession();
                     }
                     else{
                         doShowErrorAdd(json.message);
@@ -357,7 +367,7 @@ $(document)
             $('#userTel').val('');
             $('#userEmail').val('');
             $('#userLogin').val('');
-            $('#userProfil').val('');
+            //$('#userProfil').val('');
         }
 
         $('#btnUpdate').click(function (e) {
@@ -371,12 +381,12 @@ $(document)
         });
 
         function verifyBeforeUpdate(){
-            $('#btnUpdateUser').attr("disabled", true);
+            $('#btnUpdate').attr("disabled", true);
             var prenom = $('#userFirstNameUpdate').val();
             var nom = $('#userLastNameUpdate').val();
             var telephone = $('#userTelUpdate').val();
             var email = $('#userEmailUpdate').val();
-            var profil = $('#userProfilUpdate').val();
+            //var profil = $('#userProfilUpdate').val();
             if(prenom == ''){
                 doShowErrorUpdate(labelVerifyNom);
                 $('#btnUpdate').attr("disabled", false);
@@ -393,18 +403,18 @@ $(document)
                 doShowErrorUpdate(labelVerifyEmail);
                 $('#btnUpdate').attr("disabled", false);
             }
-            else if(profil == ''){
+            /*else if(profil == ''){
                 doShowErrorUpdate(labelVerifyProfil);
                 $('#btnUpdate').attr("disabled", false);
-            }
+            }*/
             else {
                 var data ={
                     'user' : idUser,
                     'nom' : nom,
                     'prenom' : prenom,
                     'telephone' : telephone,
-                    'email' : email,
-                    'profil' : profil
+                    'email' : email/*,
+                    'profil' : profil*/
                 };
                 doUpdateUser(data);
             }
@@ -413,14 +423,14 @@ $(document)
         function doUpdateUser(data){
             $(".loader").fadeIn("1000");
             $('#btnUpdate').attr("disabled", true);
-            appRoutes.controllers.UserController.updateUser().ajax({
+            appRoutes.controllers.UserManager.updateUser().ajax({
                 data : JSON.stringify(data),
                 contentType : 'application/json',
                 success : function (json) {
                     if (json.code == 200) {
                         $('#btnCancelUpdate').click();
                         doShowSuccess(json.message);
-                        getUsers();
+                        getSession();
                     }
                     else{
                         //alert(json.message);

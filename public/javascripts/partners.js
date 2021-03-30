@@ -100,7 +100,7 @@ $(document)
                               /*html += '<button class="btnUpdate item addMore"  title="'+ labelUpdate + '" data-toggle="modal" data-target="#modalUpdate">';
                                   html += '<i class="zmdi zmdi-edit"></i>';
                               html += '</button>';*/
-                              if (partners[i].type == 'SENDER'){
+                              if (partners[i].type == 'SENDER' || partners[i].type == 'MIXTE'){
                                   html += '<button class="btnDepot item addMore" title="' + labelDepot + '" data-toggle="modal" data-target="#modalDepot">';
                                       html += '<i class="zmdi zmdi-hourglass-alt"></i>';
                                   html += '</button>';
@@ -175,7 +175,7 @@ $(document)
                      $(".btnUsers").click(function(){
                          partner = $(this).parent().parent().parent().attr('id');
                          partnerId = $(this).parent().parent().parent().children('.id').attr('id');
-                         $(location).attr('href', "/partners/users?partner=" + partner + "_" + partnerId);
+                         $(location).attr('href', "/users?partner=" + partner + "_" + partnerId);
                      });
 
                      $(".btnTransactions").click(function(){
@@ -243,23 +243,41 @@ $(document)
 
             var selectedTab = $(this).attr('id');
 
+            var tabedAdmin = true;
             var tabedBank = true;
             var continu = true;
 
             if(selectedTab == 'aAddDataPartner'){
                 $(this).tab('show');
             }
-            else if(selectedTab == 'aAddDataBankPartner'){
+            else if(selectedTab == 'aAddDataAdminPartner'){
                 $('.form-part').each(function() { //loop through each form-part
                     if ($(this).val() == ''){
+                        $('#aAddDataAdminPartner').removeAttr('data-toggle');
                         $('#aAddDataBankPartner').removeAttr('data-toggle');
                         doShowErrorAdd(labelVerifyPartner);
+                        tabedAdmin = false;
                         tabedBank = false;
                         continu = false;
                         return false;
                     }
                 });
-                if(tabedBank == true && $('#partnerType').val() == 'PAYER'){
+                if(tabedAdmin == true && tabedBank == true){
+                    $('#aAddDataAdminPartner').attr('data-toggle', 'tab');
+                    $('#aAddDataBankPartner').attr('data-toggle', 'tab');
+                    $(this).tab('show');
+                }
+            }
+            else if(selectedTab == 'aAddDataBankPartner'){
+                $('.form-admin').each(function() { //loop through each form-boutik
+                    if ($(this).val() == ''){
+                        $('#aAddDataBankPartner').removeAttr('data-toggle');
+                        doShowErrorAdd(labelVerifyPartnerAdmin);
+                        tabedBank = false;
+                        return false;
+                    }
+                });
+                if(tabedBank == true){
                     $('#aAddDataBankPartner').attr('data-toggle', 'tab');
                     $(this).tab('show');
                 }
@@ -290,6 +308,11 @@ $(document)
             var bank = $('#partnerBank').val();
             var guichet = $('#partnerGuichet').val();
             var account = $('#partnerBankAccount').val();
+
+            var nom = $('#partnerAdminNom').val();
+            var prenom = $('#partnerAdminPrenom').val();
+            var login = $('#partnerAdminLogin').val();
+
             var rib = $('#partnerRIB').val();
             if(name == ''){
                 doShowErrorAdd(labelVerifyName);
@@ -315,6 +338,18 @@ $(document)
                 doShowErrorAdd(labelVerifyCountry);
                 $('#btnAdd').attr("disabled", false);
             }
+            else if(nom == ''){
+                doShowErrorAdd(labelVerifyNom);
+                $('#btnAdd').attr("disabled", false);
+            }
+            else if(prenom == ''){
+                doShowErrorAdd(labelVerifyPrenom);
+                $('#btnAdd').attr("disabled", false);
+            }
+            else if(login == ''){
+                doShowErrorAdd(labelVerifyLogin);
+                $('#btnAdd').attr("disabled", false);
+            }
             else {
                 var data ={
                     'name' : name,
@@ -323,6 +358,9 @@ $(document)
                     'telephone' : telephone,
                     'email' : email,
                     'country' : country,
+                    'nom' : nom,
+                    'prenom' : prenom,
+                    'login' : login,
                     'bank' : bank,
                     'guichet' : guichet,
                     'account' : account,
@@ -342,7 +380,7 @@ $(document)
                         $('#btnCancelAdd').click();
                         cleanAllfieldsPopupAdd();
                         doShowSuccess(json.message);
-                        getPartners();
+                        getSession();
                     }
                     else{
                         doShowErrorAdd(json.message);
@@ -367,6 +405,9 @@ $(document)
             $('#partnerTel').val('');
             $('#partnerEmail').val('');
             $('#partnerCountry').val('');
+            $('#partnerAdminNom').val('');
+            $('#partnerAdminPrenom').val('');
+            $('#partnerAdminLogin').val('');
             $('#partnerBank').val('');
             $('#partnerGuichet').val('');
             $('#partnerBankAccount').val('');
@@ -412,7 +453,7 @@ $(document)
                         $('#montantDepot').val('');
                         $('#partnertNameDepot').val('');
                         doShowSuccess(json.message);
-                        getPartners();
+                        getSession();
                     }
                     else{
                         doShowErrorDepot(json.message);

@@ -20,7 +20,10 @@
        var profil_admin = '@Const.PROFIL_ADMIN';
        var profil_sender = '@Const.PROFIL_SENDER';
        var profil_payer = '@Const.PROFIL_PAYER';
+       var profil_mixte = '@Const.PROFIL_MIXTE';
        var profilUser = '@userSession.getProfil()';
+
+       var idPartnerInSession = '@userSession.getIdPartner()';
 
        var labelVerifyAmount = '@Messages.get("label.verify.amount")';
        var labelPartner = '@Messages.get("label.partner")';
@@ -112,7 +115,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <!-- DATA TABLE -->
-                            <h3 id="titlePage" class="title-5 m-b-35"></h3>
+                            @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_ADMIN) {
+                                <h3 id="titlePage" class="title-5 m-b-35"></h3>
+                            }
+                            @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_SENDER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_PAYER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_MIXTE) {
+                                <h3 class="title-5 m-b-35">@Messages.get("menu.partner.user.list")</h3>
+                            }
                             <div class="table-data__tool">
                                 <div class="table-data__tool-left">
                                     <!--<div class="rs-select2&#45;&#45;light rs-select2&#45;&#45;md">
@@ -122,10 +130,12 @@
                                         <i class="zmdi zmdi-search"></i>@Messages.get("btn.search")</button>-->
                                 </div>
                                 <div class="table-data__tool-right">
-                                    <button class="au-btn au-btn-icon btn btn-info au-btn--small" data-toggle="modal" data-target="#modalNewUser">
-                                        <i class="zmdi zmdi-plus"></i>@Messages.get("btn.new.user")</button>
-                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                        <i class="zmdi zmdi-collection-pdf"></i>@Messages.get("btn.pdf")</button>
+                                    @if(session.get(Const.SESSION_PROFIL) == Const.PROFIL_SENDER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_PAYER || session.get(Const.SESSION_PROFIL) == Const.PROFIL_MIXTE) {
+                                        <button class="au-btn au-btn-icon btn btn-info au-btn--small" data-toggle="modal" data-target="#modalNewUser">
+                                            <i class="zmdi zmdi-plus"></i>@Messages.get("btn.new.user")</button>
+                                    }
+                                    <!--<button class="au-btn au-btn-icon au-btn&#45;&#45;green au-btn&#45;&#45;small">
+                                        <i class="zmdi zmdi-collection-pdf"></i>@Messages.get("btn.pdf")</button>-->
                                     <button class="au-btn au-btn-icon au-btn--green au-btn--small">
                                         <i class="zmdi zmdi-collection-text"></i></i>@Messages.get("btn.xls")</button>
                                 </div>
@@ -235,7 +245,7 @@
                         <small class="form-text text-muted">@Messages.get("user.login.label")</small>
                     </div>
                 </div>
-                <div class="row form-group">
+                <!--<div class="row form-group">
                     <div class="col col-md-3">
                         <label class=" form-control-label">@Messages.get("user.profil") <span class="requiered">*</span></label>
                     </div>
@@ -244,7 +254,7 @@
                         </select>
                         <small class="form-text text-muted">@Messages.get("user.profil.choice")</small>
                     </div>
-                </div>
+                </div>-->
             </div>
             <div class="modal-footer">
                 <button id="btnCancelAdd" type="button" class="btn btn-secondary" data-dismiss="modal">@Messages.get("btn.cancel")</button>
@@ -302,7 +312,7 @@
                         <small class="form-text text-muted">@Messages.get("user.email.label")</small>
                     </div>
                 </div>
-                <div class="row form-group">
+                <!--<div class="row form-group">
                     <div class="col col-md-3">
                         <label class=" form-control-label">@Messages.get("user.profil") <span class="requiered">*</span></label>
                     </div>
@@ -311,7 +321,7 @@
                         </select>
                         <small class="form-text text-muted">@Messages.get("user.profil.choice")</small>
                     </div>
-                </div>
+                </div>-->
             </div>
             <div class="modal-footer">
                 <button id="btnCancelUpdate" type="button" class="btn btn-secondary" data-dismiss="modal">@Messages.get("btn.cancel")</button>
